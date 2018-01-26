@@ -1,17 +1,24 @@
 
-import { Instrument, Logger, LogEvent, Detector } from "../types";
-
+import { Instrument, Logger, LogEvent, Detector, Factor } from "../types";
+import { CountDetector } from "../Detectors/count-detector";
+import { DurationDetector } from "../Detectors/duration-detector";
 export class ModelFeedback implements Instrument{
   description: string;
   name: string;
   div: HTMLElement;
   loggers: Logger[];
+  detectors: Detector[];
 
   constructor(elm:HTMLElement) {
     this.description = "Collect Model Events, provide feedback";
     this.name = "ModelFeedback";
     this.div = elm;
     this.loggers = [];
+    this.detectors = [
+      new CountDetector("StartedModel",new Factor("play count")),
+      new CountDetector("ButtonClicked",new Factor("button clicks")),
+      new DurationDetector("StartedModel","StoppedModel", new Factor("play duration"))
+    ];
   }
 
   updateDiv(msg:string) {
@@ -35,7 +42,7 @@ export class ModelFeedback implements Instrument{
 
   detectEvents(event: LogEvent) {
     this.detectors.forEach(detector => {
-
+      detector.handleEvent(event);
     });
   }
 
@@ -45,6 +52,9 @@ export class ModelFeedback implements Instrument{
     console.groupEnd();
     const msg = `${event.time} : ${event.event}`;
     this.updateDiv(msg);
+    this.detectors.forEach(detector => {
+      console.log(`${detector.factor.name} ${detector.factor.value}`);
+    });
   }
 
 }
