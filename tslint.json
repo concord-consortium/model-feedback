@@ -1,0 +1,71 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {
+      "no-console": false,
+      "no-shadowed-variable": false,
+      "object-literal-sort-keys": false,
+      "one-line": false,
+      "one-variable-per-declaration": false,
+      "radix": true,
+      "trailing-comma": false,
+      "triple-equals": [true, "allow-null-check"],
+      "whitespace": false
+    },
+    "rules": {
+      "adjacent-overload-signatures": false,
+      "array-type": [true, "array-simple"],
+      "arrow-parens": false,
+      "ban-types": {
+        "options": [
+            ["Object", "Avoid using the `Object` type. Did you mean `object`?"],
+            ["Boolean", "Avoid using the `Boolean` type. Did you mean `boolean`?"],
+            ["Number", "Avoid using the `Number` type. Did you mean `number`?"],
+            ["String", "Avoid using the `String` type. Did you mean `string`?"],
+            ["Symbol", "Avoid using the `Symbol` type. Did you mean `symbol`?"]
+        ]
+      },
+      "class-name": false,
+      "comment-format": false,
+      "eofline": true,
+      "interface-name": false,
+      "interface-over-type-literal": false,
+      "member-access": false,
+      "member-ordering": false,
+      "no-consecutive-blank-lines": false,
+      "no-console": false,
+      "no-empty": false,
+      "no-empty-interface": false,
+      "no-shadowed-variable": false,
+      "no-var-keyword": true,
+      "no-var-requires": false,
+      "object-literal-shorthand": false,
+      "object-literal-sort-keys": false,
+      "one-line": false,
+      "one-variable-per-declaration": false,
+      "only-arrow-functions": false,
+      "ordered-imports": false,
+      "prefer-const": false,
+      "prefer-for-of": false,
+      "quotemark": false,
+      "radix": true,
+      "semicolon": true,
+      "space-before-function-paren": false,
+      "trailing-comma": false,
+      "triple-equals": [true, "allow-null-check"],
+      "typedef-whitespace": false,
+      "unified-signatures": false,
+      "variable-name": {
+          "options": [
+              "ban-keywords",
+              "check-format",
+              "allow-leading-underscore",
+              "allow-pascal-case"
+          ]
+      },
+      "whitespace": false
+    },
+    "rulesDirectory": []
+}

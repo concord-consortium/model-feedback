@@ -1,0 +1,28 @@
+
+[
+  {
+    "factors": [
+      {"label": "R_t1", "description": "Elapsed run time in Seconds", "type": "Timer"},
+      {"label": "m_t1", "description": "Model time in Seconds?", "type": "Timer"},
+      {"label": "m_n1", "description": "Model launch count?", "type": "Count"},
+      {"label": "f_t1", "description": "Follow time Seconds", "type": "Timer"}
+    ],
+    "conditons": [
+      {"label": "C0", "expression": "R_t1 <  23", "true": "R0", "false": "C1"},
+      {"label": "C1", "expression": "m_t1 >= 98", "true": "C2", "false": "R6"},
+      {"label": "C2", "expression": "m_n1 <  2.5","true": "C3", "false": "R5"},
+      {"label": "C3", "expression": "R_t1 <  90", "true": "C4", "false": "R4"},
+      {"label": "C4", "expression": "f_t1 <  40", "true": "R1", "false": "C5"},
+      {"label": "C5", "expression": "f_t1 <  211","true": "R2", "false": "R3"}
+    ],
+    "results": [
+      {"label": "R0", "feedback": "You should …"},
+      {"label": "R1", "feedback": "You should …"},
+      {"label": "R2", "feedback": "You should …"},
+      {"label": "R3", "feedback": "Did you try  … ?"},
+      {"label": "R4", "feedback": "Did you try  … ?"},
+      {"label": "R5", "feedback": "Did you try  … ?"},
+      {"label": "R6", "feedback": "Great!"}
+    ]
+  }
+]
