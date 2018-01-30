@@ -1,4 +1,5 @@
-import { Detector, Factor, LogEvent, EventHandler} from "../types";
+import { Detector, LogEvent, EventHandler} from "../types";
+import { Factor } from "../factor";
 import { BasicDetector } from "./basic-detector";
 
 export class ComboDetector extends BasicDetector {

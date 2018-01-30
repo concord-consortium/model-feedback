@@ -1,4 +1,5 @@
-import { Detector, Factor, LogEvent, EventHandler, RESET} from "../types";
+import { Detector, LogEvent, EventHandler, RESET} from "../types";
+import { Factor } from "../factor";
 
 export class BasicDetector implements Detector {
   factor: Factor;

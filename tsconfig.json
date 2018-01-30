@@ -3,7 +3,9 @@
     "outDir": "./dist",
     "sourceMap": true,
     "declaration": true,
-    "noImplicitAny": true,
+    // TODO when lodash is fixed in schema-based-json-editor:
+    // "noImplicitAny": true,
+    "noImplicitAny": false,
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",

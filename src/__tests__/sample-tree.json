@@ -1,0 +1,28 @@
+
+[
+  {
+    "factors": [
+      {"label": "R_t1", "description": "Elapsed run time in Seconds", "type": "Timer"},
+      {"label": "m_t1", "description": "Model time in Seconds?", "type": "Timer"},
+      {"label": "m_n1", "description": "Model launch count?", "type": "Count"},
+      {"label": "f_t1", "description": "Follow time Seconds", "type": "Timer"}
+    ],
+    "conditons": [
+      {"label": "C0", "factor": "R_t1", "expression": "< ", "value": 23, "yes": "R0", "no": "C1"},
+      {"label": "C1", "factor": "m_t1", "expression": ">=", "value": 98, "yes": "C2", "no": "R6"},
+      {"label": "C2", "factor": "m_n1", "expression": "< ", "value": 2.5,"yes": "C3", "no": "R5"},
+      {"label": "C3", "factor": "R_t1", "expression": "< ", "value": 90, "yes": "C4", "no": "R4"},
+      {"label": "C4", "factor": "f_t1", "expression": "< ", "value": 40, "yes": "R1", "no": "C5"},
+      {"label": "C5", "factor": "f_t1", "expression": "< ", "value": 211,"yes": "R2", "no": "R3"}
+    ],
+    "results": [
+      {"label": "R0", "score": 1, "feedback": "You should …"},
+      {"label": "R1", "score": 1, "feedback": "You should …"},
+      {"label": "R2", "score": 1, "feedback": "You should …"},
+      {"label": "R3", "score": 1, "feedback": "Did you try  … ?"},
+      {"label": "R4", "score": 1, "feedback": "Did you try  … ?"},
+      {"label": "R5", "score": 1, "feedback": "Did you try  … ?"},
+      {"label": "R6", "score": 1, "feedback": "Great!"}
+    ]
+  }
+]

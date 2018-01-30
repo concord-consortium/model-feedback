@@ -1,3 +1,5 @@
+import { Factor } from "./factor";
+
 export interface LogEvent {
   event: string;
   time?: number;
@@ -23,17 +25,11 @@ export interface Detector {
   addHandler(e:EventHandler):void;
 }
 
-export class Factor {
-  name: string;
-  value: number;
-  constructor(name:string, value:number=0) {
-    this.name = name;
-    this.value = value;
-  }
-}
-
 export type EventHandler = (e:LogEvent) => void;
+export type EventMatcher = (e:LogEvent) => boolean;
 
 export const nTimeStamp = () => Date.now(); // millisecons
 export const STOP_DETECTING = "ModelFeedbackStop";
 export const RESET = "ModelFeedbackReset";
+
+export type Expression = "<" |  "<=" |  "==" |  ">=" | ">";

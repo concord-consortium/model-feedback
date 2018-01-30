@@ -1,17 +1,18 @@
-import { Detector, Factor, LogEvent} from "../types";
+import { Detector, LogEvent, EventMatcher} from "../types";
+import { Factor } from "../factor";
 import { BasicDetector } from "./basic-detector";
 
 export class CountDetector extends BasicDetector {
-  eventName: string;
+  matcher: EventMatcher;
   factor: Factor;
 
-  constructor(_eventName:string, _factor:Factor) {
+  constructor(_matcher:EventMatcher, _factor:Factor) {
     super(_factor);
-    this.eventName = _eventName;
+    this.matcher = _matcher;
   }
 
   handleEvent(event:LogEvent) {
-    if(event.event === this.eventName) {
+    if(this.matcher(event)) {
       this.factor.value = this.factor.value + 1;
     }
     super.handleEvent(event);

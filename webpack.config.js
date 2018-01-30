@@ -5,8 +5,8 @@ const webpack = require("webpack");
 
 module.exports = {
   entry: {
-    'event-feedback-lib': ["./src/index.ts"],
-    'event-feedback-lib.min': ["./src/index.ts"]
+    'model-feedback-lib': ["./src/index.ts"],
+    'model-feedback-lib.min': ["./src/index.ts"]
   },
 
   output: {
@@ -14,7 +14,7 @@ module.exports = {
     filename: "[name].js"
   },
   resolve: {
-    extensions: [".webpack.js", ".web.js", ".ts", ".js"]
+    extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
   },
   devtool: "source-map",
   module: {

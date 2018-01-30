@@ -1,11 +1,7 @@
-export * from "./types";
-export * from "./instruments/model-feedback";
-import { Instrument } from "./types";
-import { ModelFeedback } from "./instruments/model-feedback";
+import { ModelFeedback } from "./model-feedback";
+import { ExternalScriptHost } from "./external-script-interfaces";
 
-const instruments:Instrument[] = [];
 
-(window as any).FeedbackInstruments = {
-  addInstrument: (elm:HTMLElement) => instruments.push(new ModelFeedback(elm)),
-  instruments: instruments
-};
+const context:ExternalScriptHost = (window as any).ExternalScripts;
+context.register("aquifer1", ModelFeedback);
+
