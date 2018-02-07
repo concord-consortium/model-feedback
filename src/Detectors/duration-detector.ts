@@ -1,4 +1,4 @@
-import {Detector, LogEvent, nTimeStamp, STOP_DETECTING, EventMatcher } from "../types";
+import {Detector, LogEvent, nTimeStamp, EventMatcher, EventHandler} from "../types";
 
 import { Factor } from "../factor";
 
@@ -10,8 +10,8 @@ export class DurationDetector extends BasicDetector {
   factor: Factor;
   lastStartTime: number;
 
-  constructor(start:EventMatcher, stop:EventMatcher, _factor:Factor) {
-    super(_factor);
+  constructor(start:EventMatcher, stop:EventMatcher, _factor:Factor, _handlers:EventHandler[]=[]) {
+    super(_factor, _handlers);
     this.start = start;
     this.stop = stop;
   }
@@ -30,6 +30,12 @@ export class DurationDetector extends BasicDetector {
     const now = nTimeStamp();
     const dts = (now - this.lastStartTime)/1000;
     this.factor.value = this.factor.value + dts;
+    this.log({
+      action: 'new-interval',
+      newInterval: dts,
+      description: this.factor.description,
+      value: this.factor.value
+    });
   }
 
 }

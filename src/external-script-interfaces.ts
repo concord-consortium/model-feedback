@@ -1,4 +1,4 @@
-import {LogEvent} from "./types";
+import {LogEvent, Logger} from "./types";
 
 export type Config = any;
 
@@ -12,7 +12,7 @@ export interface Context {
 }
 
 export interface ExternalScript {
-  handleEvent(logEvent:LogEvent): void;
+  handleEvent(logEvent:LogEvent, log?:Logger): void;
 }
 
 export interface ExternalScriptConstructor {

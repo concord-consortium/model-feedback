@@ -1,4 +1,4 @@
-import { Detector, LogEvent, EventHandler, RESET, Expression } from "./types";
+import { Detector, LogEvent, EventHandler, Expression } from "./types";
 import { FactorMap} from "./factor";
 import { Condition, ConditionFromJson } from "./condition";
 import { Result, ResultFromJson} from "./result";

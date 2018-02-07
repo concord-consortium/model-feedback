@@ -6,7 +6,11 @@ const webpack = require("webpack");
 module.exports = {
   entry: {
     'model-feedback-lib': ["./src/index.ts"],
-    'model-feedback-lib.min': ["./src/index.ts"]
+    'aquifer1': ["./src/lara-approved-scripts/aquifer1.ts"],
+    'feedbackView': ["./src/lara-approved-scripts/feedback-view.ts"],
+    // TODO: Minimize this again later
+    // 'model-feedback-lib.min': ["./src/index.ts"],
+    'demo': ["./src/demo.ts"]
   },
 
   output: {
@@ -30,12 +34,13 @@ module.exports = {
   },
   stats: {
     colors: true
-  },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
-      sourceMap: true,
-      include: /\.min\.js$/,
-    })
-  ]
+  }
+  // TODO: Minimize again sometime,
+  // plugins: [
+  //   new webpack.optimize.UglifyJsPlugin({
+  //     minimize: true,
+  //     sourceMap: true,
+  //     include: /\.min\.js$/,
+  //   })
+  // ]
 };
