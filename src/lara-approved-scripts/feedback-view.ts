@@ -1,7 +1,7 @@
 import * as ReactDOM from "react-dom";
 import * as React from "react";
 import { FeedbackView } from "../components/feedback-view";
-import { ExternalScriptHost, ExternalScriptConstructor, Context} from "../external-script-interfaces";
+import { ExternalScriptHost, Context} from "../external-script-interfaces";
 
 class FeedbackViewer {
   name: string;

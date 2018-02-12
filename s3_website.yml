@@ -1,0 +1,32 @@
+
+s3_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
+s3_secret: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+s3_bucket: models-resources
+s3_key_prefix: model-feedback
+s3_endpoint: us-east-1
+gzip: true
+
+cloudfront_distribution_id: E5NG9HSJ9YM99
+cloudfront_invalidate_root: true
+cloudfront_wildcard_invalidation: true
+
+<% if ENV['TRAVIS_BRANCH'] == 'master' %>
+# in this case we are going to deploy this branch to the top level of the domain
+# so we need to ignore the version and branch folders
+ignore_on_server: ^model-feedback/(version/|branch/)
+<% else %>
+# in this case we are going to deploy this code to a subfolder of either the branch
+# or version folder. So ignore everything except this folder.
+ignore_on_server: ^(?!model-feedback/<%= Regexp.escape(ENV['DEPLOY_DIR']) %>/)
+<% end %>
+max_age:
+  "model-feedback/*": 600 # 10 minutes
+  "model-feedback/version/*": 31536000 # 1 year
+  "model-feedback/branch/*": 0
+
+cloudfront_distribution_config:
+  aliases:
+    quantity: 1
+    items:
+      - model-feedback.concord.org
+

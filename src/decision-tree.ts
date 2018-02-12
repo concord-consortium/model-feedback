@@ -1,9 +1,7 @@
-import { Detector, LogEvent, EventHandler, Expression } from "./types";
 import { FactorMap} from "./factor";
 import { Condition, ConditionFromJson } from "./condition";
 import { Result, ResultFromJson} from "./result";
 
-const DEFAULT_EXP:Expression="==";
 
 export type Node = Result | Condition;
 

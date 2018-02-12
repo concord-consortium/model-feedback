@@ -57,7 +57,7 @@ describe('DecisionTree', () => {
       expect(dt).toBeInstanceOf(DecisionTree);
     });
     it("should follow the DT rules", () => {
-      const {factors, map} = FactorsFromJson(obj.factors);
+      const {map} = FactorsFromJson(obj.factors);
       expect(dt.evaluate(map)).toBe(dt.nodeMap.R0);
       map.R_t1.value = 24;
       expect(dt.evaluate(map)).toBe(dt.nodeMap.R6);
@@ -91,7 +91,7 @@ describe('DecisionTree', () => {
       expect(dt).toBeInstanceOf(DecisionTree);
     });
     it("should follow the DT rules", () => {
-      const {factors, map} = FactorsFromJson(obj.factors);
+      const {map} = FactorsFromJson(obj.factors);
       expect(dt.evaluate(map)).toBe(dt.nodeMap.MF_R1);
       map.m_n1.value = 1;
       expect(dt.evaluate(map)).toBe(dt.nodeMap.MF_R1);
@@ -132,7 +132,7 @@ describe('DecisionTree', () => {
       expect(dt).toBeInstanceOf(DecisionTree);
     });
     it("should follow the DT rules", () => {
-      const {factors, map} = FactorsFromJson(obj.factors);
+      const {map} = FactorsFromJson(obj.factors);
       expect(dt.evaluate(map)).toBe(dt.nodeMap.MF_F1);
       map.f_n1.value = 1;
       expect(dt.evaluate(map)).toBe(dt.nodeMap.MF_F1);

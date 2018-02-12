@@ -1,6 +1,5 @@
 
-import { Expression} from "./types";
-import { Factor, FactorMap } from "./factor";
+import { FactorMap } from "./factor";
 
 export class Condition {
 
@@ -14,8 +13,6 @@ export class Condition {
   ){}
 
   eval(factors:FactorMap) {
-    const factor = factors[this.factor].value;
-
     // TODO: use Jexl or other `eval` alternative
     // tslint:disable-next-line:no-eval
     return eval(`factor ${this.expression} ${this.value}`);

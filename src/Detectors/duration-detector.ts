@@ -1,4 +1,4 @@
-import {Detector, LogEvent, nTimeStamp, EventMatcher, EventHandler} from "../types";
+import {LogEvent, nTimeStamp, EventMatcher, EventHandler} from "../types";
 
 import { Factor } from "../factor";
 

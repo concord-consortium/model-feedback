@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Factor } from "../factor";
 import { Umbrella } from "../svg";
 
 export interface ReopenButtonProps {

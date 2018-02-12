@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Factor } from "../factor";
 
 const schema:any = {
   type: "object",
@@ -72,7 +71,7 @@ export class ConfigurationView extends React.Component<
   }
 
   render() {
-    const backgroundColor = "hsla(0,0%,10%,0.9)";
+    // const backgroundColor = "hsla(0,0%,10%,0.9)";
     const style:React.CSSProperties= {
       backgroundColor: "white",
       overflow: "scroll"

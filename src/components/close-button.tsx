@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Factor } from "../factor";
 
 export interface CloseButtonProps {
   onClick: ((e:any)=> void)| null;

@@ -1,7 +1,4 @@
-import * as ReactDOM from "react-dom";
-import * as React from "react";
 
-import { FeedbackView, FeedbackState, FeedbackProps} from "./components/feedback-view";
 
 import { Logger, EventListener, LogEvent, Detector, EVENT_TYPES } from "./types";
 import { Factor, FactorMap, FactorsFromJson } from "./factor";
@@ -91,7 +88,6 @@ export class ModelFeedback implements EventListener, Logger {
     console.group('TestInstrument log');
     console.dir(event);
     console.groupEnd();
-    const msg = `${event.time} : ${event.event}`;
     this.detectors.forEach(detector => {
       console.log(`${detector.factor.label} ${detector.factor.value}`);
     });

@@ -2,6 +2,7 @@
 
 const path = require("path");
 const webpack = require("webpack");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -34,13 +35,19 @@ module.exports = {
   },
   stats: {
     colors: true
-  }
-  // TODO: Minimize again sometime,
-  // plugins: [
+  },
+
+  plugins: [
+    new CopyWebpackPlugin([{
+      from: 'html/**/*.html',
+      to: '',
+      flatten: true
+    }])
+  // TODO: Minimize again sometime
   //   new webpack.optimize.UglifyJsPlugin({
   //     minimize: true,
   //     sourceMap: true,
   //     include: /\.min\.js$/,
   //   })
-  // ]
+  ]
 };

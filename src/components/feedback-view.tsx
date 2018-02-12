@@ -5,8 +5,6 @@ import { CloseButtonView } from "./close-button";
 import { ReopenButton } from "./reopen-button";
 import { Logger, LogEvent, EventListener, EVENT_TYPES, nTimeStamp} from "../types";
 
-const flag = 0x32332;
-
 // div class="ab-robot-analysis" ⬅ where to put our button...
 export interface FeedbackProps {}
 
