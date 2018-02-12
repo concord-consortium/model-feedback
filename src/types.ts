@@ -30,7 +30,15 @@ export const EVENT_TYPES = {
   RESET: "ModelFeedbackReset",
   DISPLAY_MODEL_FEEDBACK: "display-model-feedback",
   ARG_BLOCK_SUBMIT: "arg-block submit",
-  OPEN_ACTIVITY_PAGE: "open activity page"
+  OPEN_ACTIVITY_PAGE: "open activity page",
+  STARTED_MODEL: "StartedModel",
+  STOPED_MODEL: "StoppedModel",
+  RELOADED_MODEL: "ReloadedModel",
+  RELOADED_INTERACTIVE: "ReloadedInteractive",
+  BUTTON_CLICKED: "ButtonClicked",
+  MODEL_FEEDBACK_SHOWN: "model-feedback-shown",
+  MODEL_FEEDBACK_CLOSED: "model-feedback-closed",
+  MODEL_FEEDBACK_REOPEN: "model-feedback-reopen"
 };
 
 export type Expression = "<" |  "<=" |  "==" |  ">=" | ">";

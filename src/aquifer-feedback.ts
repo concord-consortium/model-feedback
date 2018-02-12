@@ -7,6 +7,7 @@ import { DurationDetector } from "./Detectors/duration-detector";
 import { DecisionTree, DecisionTreeFromJson } from "./decision-tree";
 import { Context } from "./external-script-interfaces";
 
+
 export class AuquiferFeedback implements EventListener, Logger {
   description: string;
   name: string;
@@ -22,23 +23,25 @@ export class AuquiferFeedback implements EventListener, Logger {
     this.createFactorMap(conf.model1);
     this.dtModelTime = DecisionTreeFromJson(conf.model1);
     this.dtDropletTime = DecisionTreeFromJson(conf.model2);
-    const startModel  = (e:LogEvent) => e.event === "StartedModel";
+    const startModel  = (e:LogEvent) => e.event === EVENT_TYPES.STARTED_MODEL;
     const stopModel   = (e:LogEvent) =>  {
       switch(e.event) {
-        case "StoppedModel":
-        case "ReloadedModel":
-        case "ReloadedInteractive":
+        case EVENT_TYPES.STOPED_MODEL:
+        case EVENT_TYPES.RELOADED_MODEL:
+        case EVENT_TYPES.RELOADED_INTERACTIVE:
           return true;
         default:
           return false;
       }
     };
     const startFollow = (e:LogEvent) => {
-      return e.event === "ButtonClicked" && e.parameters.label === "Follow water droplet";
+      return e.event === EVENT_TYPES.BUTTON_CLICKED && e.parameters.label === "Follow water droplet";
     };
     const stopFollow = (e:LogEvent) => {
-      return (e.event === "ButtonClicked" && e.parameters.label === "Stop following") ||
-        (e.event === "ReloadedModel");
+      return (
+        (e.event === EVENT_TYPES.BUTTON_CLICKED) &&
+        (e.parameters.label === "Stop following")) ||
+        (e.event === EVENT_TYPES.RELOADED_MODEL);
     };
     const sendUpstream = (evt:LogEvent) => this.log(evt);
     this.detectors = [

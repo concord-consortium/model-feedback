@@ -62,7 +62,7 @@ export class FeedbackView
   reopen() {
     this.setState({showing: true, showCloseBox:true});
     this.log({
-      event: "model-feedback-reopen"
+      event: EVENT_TYPES.MODEL_FEEDBACK_REOPEN
     });
   }
 
@@ -78,7 +78,7 @@ export class FeedbackView
     const duration = timeNow - this.startTime;
     this.setState({showing: false, showCloseBox: false});
     this.log({
-      event: "model-feedback-closed",
+      event: EVENT_TYPES.MODEL_FEEDBACK_CLOSED,
       parameters: {
         duration: duration
       }
@@ -91,8 +91,8 @@ export class FeedbackView
     }
   }
 
-  handleEvent(logEvent:LogEvent, logger:Logger) {
-    if(!this.mainLogger) { this.mainLogger = logger; }
+  handleEvent(logEvent:LogEvent, logger?:Logger) {
+    if(!this.mainLogger && logger) { this.mainLogger = logger; }
     switch(logEvent.event) {
       case(EVENT_TYPES.DISPLAY_MODEL_FEEDBACK):
         this.displayFeedback(logEvent.parameters);
@@ -116,7 +116,7 @@ export class FeedbackView
         this.reopenButton.setState({showing: true});
       }
       this.log({
-        event: "model-feedback-shown",
+        event: EVENT_TYPES.MODEL_FEEDBACK_SHOWN,
         parameters: {
           startTime: this.startTime
         }
