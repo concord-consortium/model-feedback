@@ -7,7 +7,7 @@ import { DurationDetector } from "./Detectors/duration-detector";
 import { DecisionTree, DecisionTreeFromJson } from "./decision-tree";
 import { Context } from "./external-script-interfaces";
 
-export class ModelFeedback implements EventListener, Logger {
+export class AuquiferFeedback implements EventListener, Logger {
   description: string;
   name: string;
   mainLogger: Logger | null;
