@@ -32,8 +32,7 @@
   },
   "dependencies": {
     "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-schema-based-json-editor": "^7.2.1"
+    "react-dom": "^16.2.0"
   },
   "devDependencies": {
     "@types/jest": "^22.1.1",

@@ -2,7 +2,6 @@ import * as ReactDOM from "react-dom";
 import * as React from "react";
 
 import { FeedbackView, FeedbackState, FeedbackProps} from "./components/feedback-view";
-import { ConfigurationView } from "./components/configuration-view";
 
 import { Logger, EventListener, LogEvent, Detector, EVENT_TYPES } from "./types";
 import { Factor, FactorMap, FactorsFromJson } from "./factor";

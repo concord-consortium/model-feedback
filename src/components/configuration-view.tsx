@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Factor } from "../factor";
-import { JSONEditor } from "react-schema-based-json-editor";
 
 const schema:any = {
   type: "object",
@@ -82,13 +81,13 @@ export class ConfigurationView extends React.Component<
 
     return (
       <div style={style}>
-        <JSONEditor
+        {/* <JSONEditor
           schema={schema}
           initialValue={this.props.value}
-          updateValue={ (v) => console.log(v) }
+          updateValue={ (v:any) => console.log(v) }
           theme="bootstrap3"
           icon="fontawesome4"
-        />
+        /> */}
       </div>
     );
   }

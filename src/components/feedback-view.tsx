@@ -5,6 +5,7 @@ import { CloseButtonView } from "./close-button";
 import { ReopenButton } from "./reopen-button";
 import { Logger, LogEvent, EventListener, EVENT_TYPES, nTimeStamp} from "../types";
 
+const flag = 0x32332;
 
 // div class="ab-robot-analysis" ⬅ where to put our button...
 export interface FeedbackProps {}
@@ -161,11 +162,11 @@ export class FeedbackView
           <CloseButtonView showing={this.state.showCloseBox} onClick={(e) => this.close() }/>
           <img width="100px" src="http://localhost:8080/rain-bot.png"/>
           <div style={{paddingLeft: "2em"}}>
-            {this.state.feedbackItems.map( (fi) => <div>{fi}</div>) }
+            {this.state.feedbackItems.map( (fi,i) => <div key={i}>{fi}</div>) }
             <div style={{marginTop:"2em"}}>
-              {this.state.factors.map( (fact) => {
+              {this.state.factors.map( (fact,i) => {
                 return(
-                  <span style={{marginRight:"1em", fontFamily:"monospace", fontSize:"10pt"}}>
+                  <span key={i}style={{marginRight:"1em", fontFamily:"monospace", fontSize:"10pt"}}>
                     <span>{fact.label}</span>:
                     <span>{fact.value}</span>
                   </span>);
