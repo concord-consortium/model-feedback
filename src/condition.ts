@@ -13,6 +13,7 @@ export class Condition {
   ){}
 
   eval(factors:FactorMap) {
+    const factor = factors[this.factor];
     // TODO: use Jexl or other `eval` alternative
     // tslint:disable-next-line:no-eval
     return eval(`factor ${this.expression} ${this.value}`);

@@ -6,24 +6,19 @@ import { CountDetector } from "./Detectors/count-detector";
 import { DurationDetector } from "./Detectors/duration-detector";
 import { DecisionTree, DecisionTreeFromJson } from "./decision-tree";
 import { Context } from "./external-script-interfaces";
+
 export class ModelFeedback implements EventListener, Logger {
   description: string;
   name: string;
-  div: HTMLElement;
   mainLogger: Logger | null;
   detectors: Detector[];
   map: FactorMap;
   dtModelTime: DecisionTree;
   dtDropletTime: DecisionTree;
 
-  // static config(context:Context) {
-  //   // nothing happening here.
-  // TODO
-  // }
-
   constructor(conf:any, context:Context) {
-    this.description = "Collect Model Events, provide feedback";
-    this.name = "ModelFeedback";
+    this.description = "Look at Aquifer 1 Model interaction for feedback.";
+    this.name = "Aquifer1";
     this.mainLogger = conf.logger || null;
     this.createFactorMap(conf.model1);
     this.dtModelTime = DecisionTreeFromJson(conf.model1);
@@ -56,13 +51,13 @@ export class ModelFeedback implements EventListener, Logger {
 
   log(event:LogEvent) {
     if(this.mainLogger) {
+      event.parameters.model=this.name;
       this.mainLogger.log(event);
     }
   }
 
   handleEvent(event: LogEvent, logger:Logger){
     this.detectEvents(event);
-    this.reportEvent(event);
     if(! this.mainLogger) { this.mainLogger = logger; }
     if(event.event === EVENT_TYPES.ARG_BLOCK_SUBMIT) {
       const feedbackOne = this.dtModelTime.evaluate(this.map).feedback;
@@ -81,15 +76,6 @@ export class ModelFeedback implements EventListener, Logger {
   detectEvents(event: LogEvent) {
     this.detectors.forEach(detector => {
       detector.handleEvent(event);
-    });
-  }
-
-  reportEvent(event: LogEvent) {
-    console.group('TestInstrument log');
-    console.dir(event);
-    console.groupEnd();
-    this.detectors.forEach(detector => {
-      console.log(`${detector.factor.label} ${detector.factor.value}`);
     });
   }
 

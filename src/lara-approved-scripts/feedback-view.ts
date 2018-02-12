@@ -2,8 +2,9 @@ import * as ReactDOM from "react-dom";
 import * as React from "react";
 import { FeedbackView } from "../components/feedback-view";
 import { ExternalScriptHost, Context} from "../external-script-interfaces";
+import { EventListener, Logger, LogEvent } from "../types";
 
-class FeedbackViewer {
+class FeedbackViewer implements EventListener {
   name: string;
   description: string;
   feedbackView: FeedbackView;
@@ -14,8 +15,8 @@ class FeedbackViewer {
     this.setupReactView();
   }
 
-  handleEvent(evt:any) {
-    this.feedbackView.handleEvent(evt);
+  handleEvent(evt:LogEvent, logger:Logger) {
+    this.feedbackView.handleEvent(evt, logger);
   }
 
   setupReactView() {

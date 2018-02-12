@@ -1,0 +1,34 @@
+{
+ "filter": [
+  {
+     "key": "time",
+     "start_time": "2018-02-12T00:01",
+     "end_time": "2018-02-13T23:59",
+     "filter_type": "time"
+   },
+   {
+     "key": "application",
+     "list": [
+       "LARA-log-poc"
+     ],
+     "remove": false,
+     "filter_type": "string"
+   },
+   {
+     "key": "username",
+     "list": [
+       "1@app.portal.docker"
+     ],
+     "remove": false,
+     "filter_type": "string"
+   }
+ ],
+ "filter_having_keys": {
+   "keys_list": []
+ },
+ "measures": [],
+ "child_query": {
+   "filter": [],
+   "add_child_data": true
+ }
+}

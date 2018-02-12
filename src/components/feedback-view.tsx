@@ -25,7 +25,7 @@ export class FeedbackView
   extends React.Component<
           FeedbackProps,
           FeedbackState>
-  implements EventListener {
+  implements EventListener, Logger {
 
   mainLogger: Logger;
   reopenButton: ReopenButton | null;
@@ -60,8 +60,7 @@ export class FeedbackView
   }
 
   reopen() {
-    this.setState({showing: true});
-    setTimeout((e:any) => this.setState({showCloseBox: true}), 4000);
+    this.setState({showing: true, showCloseBox:true});
     this.log({
       event: "model-feedback-reopen"
     });
@@ -85,13 +84,15 @@ export class FeedbackView
       }
     });
   }
-  log(logEvent:LogEvent) {
+
+  log(logEvent:LogEvent, logger?:Logger) {
     if(this.mainLogger) {
       this.mainLogger.log(logEvent);
     }
   }
 
-  handleEvent(logEvent:LogEvent) {
+  handleEvent(logEvent:LogEvent, logger:Logger) {
+    if(!this.mainLogger) { this.mainLogger = logger; }
     switch(logEvent.event) {
       case(EVENT_TYPES.DISPLAY_MODEL_FEEDBACK):
         this.displayFeedback(logEvent.parameters);
