@@ -19,26 +19,30 @@ export class AuquiferFeedback implements EventListener, Logger {
   constructor(conf:any, context:Context) {
     this.description = "Look at Aquifer 1 Model interaction for feedback.";
     this.name = "Aquifer1";
-    this.mainLogger = conf.logger || null;
     this.createFactorMap(conf.model1);
     this.dtModelTime = DecisionTreeFromJson(conf.model1);
     this.dtDropletTime = DecisionTreeFromJson(conf.model2);
     const startModel  = (e:LogEvent) => e.event === "StartedModel";
-    const ReloadedModel  = (e:LogEvent) => e.event === "ReloadedModel";
     const stopModel   = (e:LogEvent) =>  {
-      return e.event === "StoppedModel" || e.event === "ReloadedModel";
+      switch(e.event) {
+        case "StoppedModel":
+        case "ReloadedModel":
+        case "ReloadedInteractive":
+          return true;
+        default:
+          return false;
+      }
     };
     const startFollow = (e:LogEvent) => {
       return e.event === "ButtonClicked" && e.parameters.label === "Follow water droplet";
     };
     const stopFollow = (e:LogEvent) => {
       return (e.event === "ButtonClicked" && e.parameters.label === "Stop following") ||
-        (e.event === "ReloadedMode");
+        (e.event === "ReloadedModel");
     };
     const sendUpstream = (evt:LogEvent) => this.log(evt);
     this.detectors = [
       new CountDetector(startModel,  this.map.m_n1, [sendUpstream]),
-      new CountDetector(ReloadedModel, new Factor("reload count"), [sendUpstream]),
       new CountDetector(startFollow, this.map.f_n1, [sendUpstream]),
       new DurationDetector(startModel, stopModel, this.map.m_t1, [sendUpstream]),
       new DurationDetector(startFollow, stopFollow, this.map.f_t1, [sendUpstream])

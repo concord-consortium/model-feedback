@@ -2,7 +2,7 @@
 import * as ReactDOM from "react-dom";
 import * as React from "react";
 import { FeedbackView} from "./components/feedback-view";
-import { EVENT_TYPES } from "./types";
+import { EVENT_TYPES, LogEvent} from "./types";
 
 document.addEventListener("DOMContentLoaded", function(event) {
   const feedbackContainer = document.createElement("div");
@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   const feedbackView = ReactDOM.render(feedbackElm, feedbackContainer);
   feedbackView.setState({showing: true});
 
+  const logger = { log: (e:LogEvent) => console.log(e)};
   feedbackView.handleEvent({
     event: EVENT_TYPES.DISPLAY_MODEL_FEEDBACK,
     parameters: {
@@ -21,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
         {name: "n2", value:2}
       ]
     }
-  });
-
+  }, logger);
 });
 
