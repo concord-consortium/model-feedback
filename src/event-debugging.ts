@@ -1,6 +1,6 @@
 
 
-import { Logger, EventListener, LogEvent, Detector, EVENT_TYPES } from "./types";
+import { Logger, EventListener, LogEvent } from "./types";
 import { Context } from "./external-script-interfaces";
 
 export class EventDebugging implements EventListener, Logger {

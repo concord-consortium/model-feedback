@@ -13,6 +13,7 @@ export class Condition {
   ){}
 
   eval(factors:FactorMap) {
+    // tslint:disable-next-line:no-unused-variable
     const factor = factors[this.factor];
     // TODO: use Jexl or other `eval` alternative
     // tslint:disable-next-line:no-eval
