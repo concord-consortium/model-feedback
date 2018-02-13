@@ -4,6 +4,10 @@ import * as React from "react";
 import { FeedbackView} from "./components/feedback-view";
 import { EVENT_TYPES, LogEvent} from "./types";
 
+const feedbackItems = [
+  "It looks like you didn't spend enough time with the model! Run the model again  until a pool of water reaches the surface.",
+  "It looks like you did not spend enough time following the water droplet! Follow it for 15 seconds or longer.."
+];
 document.addEventListener("DOMContentLoaded", function(event) {
   const feedbackContainer = document.createElement("div");
   const argblockElm = document.querySelector(".arg-block");
@@ -16,10 +20,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
   feedbackView.handleEvent({
     event: EVENT_TYPES.DISPLAY_MODEL_FEEDBACK,
     parameters: {
-      feedbackItems: ["good","job"],
+      feedbackItems: feedbackItems,
       factors: [
-        {name: "n1", value:1},
-        {name: "n2", value:2}
+        {label: "n1", value:10},
+        {label: "T1", value:0.12}
       ]
     }
   }, logger);

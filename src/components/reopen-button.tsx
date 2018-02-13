@@ -41,6 +41,7 @@ export class ReopenButton extends React.Component<
       backgroundColor: bgColor,
       color: fgColor,
       display: "flex",
+      fontSize: "16pt",
       flexDirection: "row",
       justifyContent: "space-around",
       alignItems: "center",
