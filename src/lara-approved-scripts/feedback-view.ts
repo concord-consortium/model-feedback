@@ -4,6 +4,8 @@ import { FeedbackView } from "../components/feedback-view";
 import { ExternalScriptHost, Context} from "../external-script-interfaces";
 import { EventListener, Logger, LogEvent } from "../types";
 
+const DOM_SELECTOR=".arg-block";
+
 class FeedbackViewer implements EventListener {
   name: string;
   description: string;
@@ -21,7 +23,7 @@ class FeedbackViewer implements EventListener {
 
   setupReactView() {
     const reactContainer = document.createElement("div");
-    const argblock = document.querySelector(".arg-block");
+    const argblock = document.querySelector(DOM_SELECTOR);
     (argblock as Element).appendChild(reactContainer);
     const element = React.createElement(FeedbackView, null);
     this.feedbackView = ReactDOM.render(element, reactContainer);

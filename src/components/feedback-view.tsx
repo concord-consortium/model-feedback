@@ -5,7 +5,10 @@ import { CloseButtonView } from "./close-button";
 import { ReopenButton } from "./reopen-button";
 import { Logger, LogEvent, EventListener, EVENT_TYPES, nTimeStamp} from "../types";
 
-// div class="ab-robot-analysis" ⬅ where to put our button...
+const ROBOT_IMAGE_URL = "https://model-feedback.concord.org/rain-bot.png";
+const DOM_SELECT_FOR_BUTTON = ".ab-robot-analysis";
+const CLOSE_BUTTON_DELAY_TIME = 4000; // ms
+
 export interface FeedbackProps {}
 
 export interface FeedbackState {
@@ -47,10 +50,10 @@ export class FeedbackView
   }
 
   componentDidMount() {
-    // create a React component elsewhere in the Document.
-    // I haven't seen many example of this, but it seems to work...
+    // Create a non-child React component elsewhere in the Document.
+    // I haven't seen an example of this, but it seems to work.
     const buttonContainer = document.createElement("div");
-    const robotImageElm = document.querySelector(".ab-robot-analysis");
+    const robotImageElm = document.querySelector(DOM_SELECT_FOR_BUTTON);
     (robotImageElm as Element).appendChild(buttonContainer);
     const x = React.createElement(ReopenButton, {
       onClick: (e:any) => this.reopen(),
@@ -111,7 +114,7 @@ export class FeedbackView
         feedbackItems: JSON.parse(JSON.stringify(params.feedbackItems)),
         factors: JSON.parse(JSON.stringify(params.factors))
       });
-      setTimeout((e:any) => this.setState({showCloseBox: true}), 4000);
+      setTimeout((e:any) => this.setState({showCloseBox: true}), CLOSE_BUTTON_DELAY_TIME);
       if(this.reopenButton) {
         this.reopenButton.setState({showing: true});
       }
@@ -159,7 +162,7 @@ export class FeedbackView
         <div style={innerStyle}>
 
           <CloseButtonView showing={this.state.showCloseBox} onClick={(e) => this.close() }/>
-          <img width="100px" src="http://localhost:8080/rain-bot.png"/>
+          <img width="100px" src={ROBOT_IMAGE_URL}/>
           <div style={{paddingLeft: "2em"}}>
             {this.state.feedbackItems.map( (fi,i) => <div key={i}>{fi}</div>) }
             <div style={{marginTop:"2em"}}>
