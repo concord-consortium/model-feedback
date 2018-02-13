@@ -1,12 +1,9 @@
-
-
-import { Logger, EventListener, LogEvent, Detector, EVENT_TYPES } from "./types";
-import { Factor, FactorMap, FactorsFromJson } from "./factor";
-import { CountDetector } from "./Detectors/count-detector";
-import { DurationDetector } from "./Detectors/duration-detector";
-import { DecisionTree, DecisionTreeFromJson } from "./decision-tree";
-import { Context } from "./external-script-interfaces";
-
+import { Logger, EventListener, LogEvent, Detector, EVENT_TYPES } from "../types";
+import { Factor, FactorMap, FactorsFromJson } from "../factor";
+import { CountDetector } from "../Detectors/count-detector";
+import { DurationDetector } from "../Detectors/duration-detector";
+import { DecisionTree, DecisionTreeFromJson } from "../decision-tree";
+import { Context, ExternalScriptHost } from "../external-script-interfaces";
 
 export class AuquiferFeedback implements EventListener, Logger {
   description: string;
@@ -87,3 +84,6 @@ export class AuquiferFeedback implements EventListener, Logger {
   }
 
 }
+
+const context:ExternalScriptHost = (window as any).ExternalScripts;
+context.register("aquifer", AuquiferFeedback);

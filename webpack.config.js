@@ -6,9 +6,9 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: {
-    'model-feedback-lib': ["./src/index.ts"],
-    'aquifer1': ["./src/lara-approved-scripts/aquifer1.ts"],
+    'aquifer': ["./src/lara-approved-scripts/aquifer.ts"],
     'feedbackView': ["./src/lara-approved-scripts/feedback-view.ts"],
+    'debugging': ["./src/lara-approved-scripts/event-debugging.ts"],
     // TODO: Minimize this again later
     // 'model-feedback-lib.min': ["./src/index.ts"],
     'demo': ["./src/demo.ts"]

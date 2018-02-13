@@ -163,7 +163,7 @@ export class FeedbackView
 
           <CloseButtonView showing={this.state.showCloseBox} onClick={(e) => this.close() }/>
           <img width="100px" src={ROBOT_IMAGE_URL}/>
-          <div style={{paddingLeft: "2em"}}>
+          <div style={{paddingLeft: "2em", minWidth: "250px"}}>
             {this.state.feedbackItems.map( (fi,i) => <div key={i}>{fi}</div>) }
             <div style={{marginTop:"2em"}}>
               {this.state.factors.map( (fact,i) => {

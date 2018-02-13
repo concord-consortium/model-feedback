@@ -1,5 +1,5 @@
 
-export const Model:string = `{}
+export const Model:string = `{
   "model1":
     {
       "factors": [

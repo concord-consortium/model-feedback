@@ -1,7 +1,5 @@
-
-
-import { Logger, EventListener, LogEvent } from "./types";
-import { Context } from "./external-script-interfaces";
+import { Logger, EventListener, LogEvent } from "../types";
+import { Context, ExternalScriptHost } from "../external-script-interfaces";
 
 export class EventDebugging implements EventListener, Logger {
   description: string;
@@ -29,3 +27,6 @@ export class EventDebugging implements EventListener, Logger {
   }
 
 }
+
+const context:ExternalScriptHost = (window as any).ExternalScripts;
+context.register("debugging", EventDebugging);
