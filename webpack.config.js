@@ -39,7 +39,7 @@ module.exports = {
 
   plugins: [
     new CopyWebpackPlugin([{
-      from: 'html/**/*.html',
+      from: 'html/**/*',
       to: '',
       flatten: true
     }])
