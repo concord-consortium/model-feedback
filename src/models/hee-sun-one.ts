@@ -1,5 +1,6 @@
 
-export const Model:string = `{
+export const Model:string = `
+{
   "model1":
     {
       "factors": [
@@ -15,7 +16,7 @@ export const Model:string = `{
         {"label": "C3", "factor": "m_n1", "expression": "> ", "value": 2,  "yes": "NONE",  "no": "MF_R1"}
       ],
       "results": [
-        {"label": "MF_R1", "score": 1, "feedback": "Run the model and observe what happens to water as it moves underground."},
+        {"label": "MF_R1", "score": 1, "feedback": "It looks like you didn't spend enough time with the model! Run the model again  until a pool of water reaches the surface."},
         {"label": "MF_R2", "score": 2, "feedback": "It looks like you didn't spend enough time with the model! Run the model again  until a pool of water reaches the surface."},
         {"label": "NONE", "score": 3, "feedback": ""}
       ]
@@ -38,7 +39,7 @@ export const Model:string = `{
         {"label": "MF_F1",    "score": 1, "feedback": "It looks like you didn't follow any water droplets! Use the 'Follow water droplet' button to follow several water droplets in the model."},
         {"label": "MF_F2",    "score": 2, "feedback": "It looks like you didn't follow enough water droplets. Follow a few more water droplets."},
         {"label": "MF_F2_F3", "score": 3, "feedback": "It looks like you didn't follow enough water droplets. Follow a few more water droplets. It looks like you did not spend enough time following the water droplet! Follow it for 15 seconds or longer.."},
-        {"label": "MF_F3",    "score": 4, "feedback": "It looks like you did not spend enough time following the water droplet! Follow it for 15 seconds or longer.."},
+        {"label": "MF_F3",    "score": 4, "feedback": "It looks like you did not spend enough time following water droplets. Run the model for longer and follow a few more droplets."},
         {"label": "NONE",     "score": 5, "feedback": ""}
       ]
     }
