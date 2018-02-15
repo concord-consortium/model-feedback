@@ -1,3 +1,5 @@
+import { LayerHelper } from "./layer-helper";
+import { AquiferMap } from "./aquifer-map";
 
 export interface Well {
   x: number;
@@ -14,6 +16,7 @@ export class WellManager {
   private wells: WellMap;
   actionCounter: number;
   wellCount: number;
+  layerHelper: LayerHelper;
 
   constructor() {
     this.reinit();
@@ -23,10 +26,11 @@ export class WellManager {
     this.actionCounter = 0;
     this.wellCount = 0;
     this.wells = {};
+    this.layerHelper = new LayerHelper(AquiferMap);
   }
 
   incActionCounter() {
-    this.actionCounter++;
+    this.actionCounter = this.actionCounter+1;
     return this.actionCounter;
   }
 
@@ -39,14 +43,14 @@ export class WellManager {
   }
 
   add(well:Well) {
-    this.wells[this.keyForWell(well)] = well;
-    well.lastTick = this.incActionCounter();
-    this.wellCount++;
+    this.wells[this.keyForWell(well)] =  {x:well.x, y:well.y};
+    this.wells[this.keyForWell(well)].lastTick = this.incActionCounter();
+    this.wellCount = this.wellCount + 1;
     return well;
   }
 
   remove(well?:Well) {
-    this.wellCount--;
+    this.wellCount = this.wellCount -1;
   }
 
   modify(well:Well) {
@@ -63,11 +67,12 @@ export class WellManager {
 
   livingWells() {
     return Object.keys(this.wells)
-      .map( (key:string) => this.wells[key])
-      .filter( (i) => 'undefined' !== typeof i)
+      .map( (key:string) => Object.assign({}, this.wells[key]))
       .sort( (a:Well, b:Well) => {
-        if((a.lastTick||0) < (b.lastTick||0)) { return  1; }
-        if((a.lastTick||0) > (b.lastTick||0)) { return -1; }
+        if("undefined" !== typeof a.lastTick && "undefined" !== typeof b.lastTick) {
+          if(a.lastTick < b.lastTick) { return 1; }
+          if(a.lastTick > b.lastTick) { return -1; }
+        }
         return 0;
       })
       .slice(0,this.wellCount);
