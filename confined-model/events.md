@@ -1,6 +1,5 @@
 
-
-# A log of events from this here interactive:
+# A sample log of some events from this Interactive:
 
 [water4.json](https://lab.concord.org/embeddable.html#interactives/water/water-4.json)
 
@@ -14,7 +13,5 @@ Events:
 `Non-flowbackWellModified` parameters {id:1, x:-101, y:16 }
 `Non-flowbackWellAdded` parameters {id:1, x:-101, y:16}
 `Non-flowbackWellRemoved` parameters: {id:1}
-`SliderChanged` parameters { endVal:.82, maxVal: .82, minVal:0.36, time:0.4,  property: "rainProbability }
+`SliderChanged` parameters { endVal:.82, maxVal: .82, minVal:0.36, time:0.4,  property: "rainProbability" }
 
-
-Update rainProbability rp_min rp_max rp_range rp_a
