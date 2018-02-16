@@ -6,7 +6,7 @@ let wellManager:WellManager;
 const  makeWells = (count:number) => {
   wellManager.reinit();
   for(let i = 0; i < count; i++) {
-    wellManager.add({x:i, y:0});
+    wellManager.add({x:i, y:0} as Well);
   }
 };
 
@@ -23,7 +23,6 @@ const modifyWells = (count:number) => {
 
 
 describe('WellManager', () => {
-
   function newWell(x=0,y=0, lastTick=0){
     return {x: x, y: y, lastTick: lastTick };
   }

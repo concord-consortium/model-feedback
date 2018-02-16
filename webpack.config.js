@@ -9,6 +9,7 @@ module.exports = {
     'aquifer': ["./src/lara-approved-scripts/aquifer.ts"],
     'feedbackView': ["./src/lara-approved-scripts/feedback-view.ts"],
     'debugging': ["./src/lara-approved-scripts/event-debugging.ts"],
+    'confined': ["./src/lara-approved-scripts/confined.ts"],
     // TODO: Minimize this again later
     // 'model-feedback-lib.min': ["./src/index.ts"],
     'demo': ["./src/demo.ts"]

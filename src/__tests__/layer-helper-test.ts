@@ -43,7 +43,7 @@ describe('LayerHelper', () => {
   });
 
   describe('wells at X=0', () =>{
-    const well={x:0, y:0};
+    const well={x:0, y:0, lastTick:0};
     it("at depth -100", () => {
       well.y=-100;
       expect(layerHelper.layerFor(well).name).toBe('rock_bed_confined');
@@ -82,7 +82,7 @@ describe('LayerHelper', () => {
     });
   });
   describe('wells at X=2', () =>{
-    const well={x:2, y:0};
+    const well={x:2, y:0, lastTick:0};
     it("at depth -100", () => {
       well.y=-100;
       expect(layerHelper.layerFor(well).name).toBe('rock_bed_confined');
@@ -121,7 +121,7 @@ describe('LayerHelper', () => {
     });
   });
   describe('wells at X=3', () =>{
-    const well={x:3, y:0};
+    const well:Well={x:3, y:0, lastTick:0};
     it("at depth -100", () => {
       well.y=-100;
       expect(layerHelper.layerFor(well).name).toBe('water_table_confined');
@@ -164,7 +164,7 @@ describe('LayerHelper', () => {
     it("should match the layer name /confined/ ", () =>{
       const ys = [-4, -2, 0, 4, 8];
       const confineds = [true, true, true, false, false];
-      const well = {x:0, y:ys[0]};
+      const well = {x:0, y:ys[0], lastTick:0};
       ys.forEach( (y,i) => {
         well.y = y;
         expect(layerHelper.isConfined(well)).toBe(confineds[i]);

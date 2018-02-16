@@ -7,12 +7,12 @@ export const Model =
         "type": "Timer"
       },
       {
-        "label": "r_pa",
+        "label": "rp_a",
         "description": "Rain probability average.",
         "type": "Number"
       },
       {
-        "label": "r_pr",
+        "label": "rp_r",
         "description": "Rain probability range",
         "type": "Number"
       },
@@ -57,8 +57,7 @@ export const Model =
         "score": 6,
         "feedback": ""
       }
-    ]
-  },
+    ],
     "conditions": [{
         "label": "C0",
         "factor": "mt",
@@ -100,5 +99,6 @@ export const Model =
         "no": "R4"
       }
     ]
+  }
 }
 ;

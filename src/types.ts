@@ -38,7 +38,11 @@ export const EVENT_TYPES = {
   BUTTON_CLICKED: "ButtonClicked",
   MODEL_FEEDBACK_SHOWN: "model-feedback-shown",
   MODEL_FEEDBACK_CLOSED: "model-feedback-closed",
-  MODEL_FEEDBACK_REOPEN: "model-feedback-reopen"
+  MODEL_FEEDBACK_REOPEN: "model-feedback-reopen",
+  WELL_MODIFIED: "Non-flowbackWellModified",
+  WELL_ADDED: "Non-flowbackWellAdded",
+  WELL_REMOVED: "Non-flowbackWellRemoved",
+  SLIDER_CHANGED: "SliderChanged"
 };
 
 export type Expression = "<" |  "<=" |  "==" |  ">=" | ">";

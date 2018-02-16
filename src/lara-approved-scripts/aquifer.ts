@@ -1,7 +1,7 @@
 import { Logger, EventListener, LogEvent, Detector, EVENT_TYPES } from "../types";
 import { Factor, FactorMap, FactorsFromJson } from "../factor";
-import { CountDetector } from "../Detectors/count-detector";
-import { DurationDetector } from "../Detectors/duration-detector";
+import { CountDetector } from "../detectors/count-detector";
+import { DurationDetector } from "../detectors/duration-detector";
 import { DecisionTree, DecisionTreeFromJson } from "../decision-tree";
 import { Context, ExternalScriptHost } from "../external-script-interfaces";
 
