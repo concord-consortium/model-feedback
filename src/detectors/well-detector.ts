@@ -9,7 +9,6 @@ export class WellDetector extends BasicDetector {
   unconfinedFactor: Factor;
   total: number;
 
-
   constructor(
     _confinedFactor:Factor,
     _unconfinedFactor:Factor,
@@ -47,7 +46,7 @@ export class WellDetector extends BasicDetector {
         this.removeWell(event);
         break;
       default:
-        // NOP
+        // NO-OP
     }
   }
 
