@@ -170,7 +170,7 @@ export class FeedbackView
                 return(
                   <span key={i}style={{marginRight:"1em", fontFamily:"monospace", fontSize:"10pt"}}>
                     <span>{fact.label}</span>:
-                    <span>{fact.value}</span>
+                    <span>{(fact.value || 0).toFixed(2)}</span>
                   </span>);
               })}
             </div>
