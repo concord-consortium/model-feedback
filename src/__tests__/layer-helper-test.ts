@@ -1,4 +1,4 @@
-import { YMap, AquiferMap, IAquiferMap } from "../confined-model/aquifer-map";
+import { IAquiferMap } from "../confined-model/aquifer-map";
 import { Well } from "../confined-model/well-manager";
 import { LayerHelper } from "../confined-model/layer-helper";
 
