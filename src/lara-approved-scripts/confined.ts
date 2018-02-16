@@ -27,7 +27,7 @@ export class Confined implements EventListener, Logger {
     const sendUpstream = (evt:LogEvent) => this.log(evt);
     this.detectors = [
       new ModelRestartDetector(this.map.mt, [sendUpstream]),
-      new RainProbablityDetector(this.map.rp_a, this.map.pr_r, [sendUpstream]),
+      new RainProbablityDetector(this.map.rp_a, this.map.rp_r, [sendUpstream]),
       new WellDetector(this.map.uo, this.map.co, this.wellManager, [sendUpstream])
     ];
   }
