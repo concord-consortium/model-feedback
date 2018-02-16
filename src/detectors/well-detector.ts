@@ -61,7 +61,7 @@ export class WellDetector extends BasicDetector {
       .map( (k) => event.parameters[k])
       .reduce( (p,c) => p+c, 0);
 
-    const {confined,unconfined} = this.wellManager.splitAmount(newTotal-this.total);
+    const {confined,unconfined} = this.wellManager.splitAmount(newTotal);
     this.total = this.total + newTotal;
     this.confinedFactor.value += confined;
     this.unconfinedFactor.value  += unconfined;
