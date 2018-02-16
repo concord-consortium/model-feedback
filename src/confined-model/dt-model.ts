@@ -30,27 +30,27 @@ export const Model =
     "results": [{
         "label": "R0",
         "score": 1,
-        "feedback": "Run the model longer."
+        "feedback": "It looks like you didn’t spend enough time with the model. Run the model for longer and compare the water levels in the two different aquifers"
       },
       {
         "label": "R1",
         "score": 2,
-        "feedback": "Experiment with higher Rain probability"
+        "feedback": "The rain probability may be too low. Change the rain probability slider to a higher value so that the unconfined aquifer maintains a steady water level without flooding or running dry."
       },
       {
         "label": "R2",
         "score": 3,
-        "feedback": "Experiment with different rain probabilities"
+        "feedback": "The rain probability may be too low or too high. Experiment with a wide range of rain probabilities. Make sure that the unconfined aquifer maintains a steady water level without flooding or running dry."
       },
       {
         "label": "R3",
         "score": 4,
-        "feedback": "Try some deeper wells"
+        "feedback": "Place a well in the confined aquifer. Make sure the bottom of the well is deep enough in the water. Run the model for longer and compare the water levels in the two different aquifers."
       },
       {
         "label": "R4",
         "score": 5,
-        "feedback": "Compare deep water wells with more shallow wells."
+        "feedback": "Run the model a little bit longer and compare how water levels change in the two types of aquifers."
       },
       {
         "label": "R5",
