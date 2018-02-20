@@ -2,9 +2,9 @@ import { LogEvent, EventHandler, EVENT_TYPES } from "../types";
 import { Factor } from "../factor";
 import { DurationDetector } from "./duration-detector";
 
-export class ModelRestartDetector extends DurationDetector {
+export class ModelRuntimeDetector extends DurationDetector {
 
-  constructor(_factor:Factor, _handlers:EventHandler[]=[]) {
+constructor(_factor:Factor, _handlers:EventHandler[]=[]) {
     const startModel  = (e:LogEvent) => e.event === EVENT_TYPES.STARTED_MODEL;
     const stopModel   = (e:LogEvent) =>  {
       switch(e.event) {

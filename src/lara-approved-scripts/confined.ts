@@ -1,6 +1,6 @@
 import { Logger, EventListener, LogEvent, Detector, EVENT_TYPES } from "../types";
 import { Factor, FactorMap, FactorsFromJson } from "../factor";
-import { ModelRestartDetector } from "../detectors/model-restart-detector";
+import { ModelRuntimeDetector } from "../detectors/model-run-time-detector";
 import { WellDetector } from "../detectors/well-detector";
 import { RainProbablityDetector } from "../detectors/rain-probability-detector";
 import { DecisionTree, DecisionTreeFromJson } from "../decision-tree";
@@ -26,7 +26,7 @@ export class Confined implements EventListener, Logger {
     this.wellManager = new WellManager();
     const sendUpstream = (evt:LogEvent) => this.log(evt);
     this.detectors = [
-      new ModelRestartDetector(this.map.mt, [sendUpstream]),
+      new ModelRuntimeDetector(this.map.mt, [sendUpstream]),
       new RainProbablityDetector(this.map.rp_a, this.map.rp_r, [sendUpstream]),
       new WellDetector(this.map.co, this.map.uo, this.wellManager, [sendUpstream])
     ];
