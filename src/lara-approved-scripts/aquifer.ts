@@ -6,7 +6,7 @@ import { ModelRuntimeDetector } from "../detectors/model-run-time-detector";
 import { DecisionTree, DecisionTreeFromJson } from "../decision-tree";
 import { Context, ExternalScriptHost } from "../external-script-interfaces";
 
-export class AuquiferFeedback implements EventListener, Logger {
+export class AquiferFeedback implements EventListener, Logger {
   description: string;
   name: string;
   mainLogger: Logger | null;
@@ -77,4 +77,4 @@ export class AuquiferFeedback implements EventListener, Logger {
 }
 
 const context:ExternalScriptHost = (window as any).ExternalScripts;
-context.register("aquifer", AuquiferFeedback);
+context.register("aquifer", AquiferFeedback);
