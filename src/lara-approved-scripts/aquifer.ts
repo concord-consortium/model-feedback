@@ -35,7 +35,7 @@ export class AuquiferFeedback implements EventListener, Logger {
     this.detectors = [
       new CountDetector(startModel,  this.map.m_n1, [sendUpstream]),
       new CountDetector(startFollow, this.map.f_n1, [sendUpstream]),
-      new ModelRuntimeDetector(this.map.mt, [sendUpstream]),
+      new ModelRuntimeDetector(this.map.m_t1, [sendUpstream]),
       new DurationDetector(startFollow, stopFollow, this.map.f_t1, [sendUpstream])
     ];
   }
