@@ -1,100 +1,36 @@
 import { LayerHelper } from "./layer-helper";
 import { AquiferMap } from "./aquifer-map";
+import { Well, WellManagerBase } from "../well-and-aquifer/well";
 
-export interface Well {
-  x: number;
-  y?: number;
-  lastTick: number;
-  confined?: boolean;
-  id?:number;
-}
+export class WellManager extends WellManagerBase {
 
-interface WellMap {
-  [key:string]: Well;
-}
-
-export class WellManager {
-
-  private wells: WellMap;
-  actionCounter: number;
-  wellCount: number;
   layerHelper: LayerHelper;
 
-  constructor() {
-    this.reinit();
-  }
-
   reinit(){
-    this.actionCounter = 0;
-    this.wellCount = 0;
-    this.wells = {};
+    super.reinit();
     this.layerHelper = new LayerHelper(AquiferMap);
   }
 
-  incActionCounter() {
-    this.actionCounter = this.actionCounter+1;
-    return this.actionCounter;
+  activeConfinedCount() {
+    return this.livingWells().filter((w) => w.confined && w.canPump).length;
   }
 
-  keyForWell(well:Partial<Well>) {
-    return `${well.x}`;
+  activeUnconfinedCount() {
+    return this.livingWells().filter((w) => w.confined && w.canPump).length;
   }
 
-  find(well:Partial<Well>) {
-    return this.wells[this.keyForWell(well)];
-  }
-
-  add(well:Well) {
-    this.wells[this.keyForWell(well)] =  {x:well.x, y:well.y, lastTick: this.incActionCounter()};
-    this.wellCount = this.wellCount + 1;
-    return well;
-  }
-
-  remove(well?:Well) {
-    this.wellCount = this.wellCount -1;
-  }
-
-  modify(well:Partial<Well>) {
-    let found = this.find(well);
-    if(found) {
-      found.y = well.y;
-      found.lastTick = this.incActionCounter();
-    }
-    else {
-      found = this.add(well as Well);
-    }
-    return found;
-  }
-
-  livingWells() {
-    const makeWell = (key:string):Well =>{
-      const oldWell = this.wells[key];
-      return Object.assign({
-        confined: this.layerHelper.isConfined(oldWell)
-      }, oldWell);
-    };
-
-    return Object.keys(this.wells)
-      .map(makeWell)
-      .sort( (a:Well, b:Well) => {
-        if(a.lastTick < b.lastTick) { return 1; }
-        if(a.lastTick > b.lastTick) { return -1; }
-        return 0;
-      })
-      .slice(0,this.wellCount);
-  }
-
-  confinedCount() {
-    return this.livingWells().filter( (w) => w.confined === true).length;
-  }
-
-  unconfinedCount() {
-    return this.livingWells().filter( (w) => w.confined === false).length;
+  livingWells() : Well[] {
+    let ans = super.livingWells();
+    ans.forEach((w) => {
+      w.canPump = this.layerHelper.canPump (w);
+      w.confined = this.layerHelper.isConfined(w);
+    })
+    return ans
   }
 
   splitAmount(flow:number){
-    let unconfined = this.unconfinedCount();
-    let confined = this.confinedCount();
+    let unconfined = this.activeUnconfinedCount();
+    let confined = this.activeConfinedCount();
     const total = confined + unconfined;
     if (total < 1) {
       confined = 0;
@@ -111,8 +47,8 @@ export class WellManager {
   stats() {
     const statsString = (`
       wellCount: ${this.wellCount}
-      confined: ${this.confinedCount}
-      unconfined: ${this.unconfinedCount}
+      confined: ${this.activeConfinedCount()}
+      unconfined: ${this.activeUnconfinedCount()}
       ${this.livingWells().map( (w:Well, i) => `well_${i}:  [X:${w.x}, Y:${w.y}]`).join("\n")}
     `).replace(/^\s+/gm,'');
     return statsString;

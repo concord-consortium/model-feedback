@@ -3,7 +3,7 @@
 ### Project Goal
 Generate feedback based on user interactions from models. This repo contains Javascripts for listening to Model CC-Log-Manager Events, and providing student feedback based on how they interacted with the model.
 
-It is inteded to be used in [LARA](https://github.com/concord-consortium/lara) as  `ExternalScript`s. These scripts must be reviewed by a LARA admin before being added to the runtime. Authors must then add one more more Model Feedback script from `lara-approved-scripts/` to the interactive page.
+It is intended to be used in [LARA](https://github.com/concord-consortium/lara) as  `ExternalScript`s. These scripts must be reviewed by a LARA admin before being added to the runtime. Authors must then add one more more Model Feedback script from `lara-approved-scripts/` to the interactive page.
 
 Warning:  This is a new and experimental feature, and is subject to rapid change.
 
@@ -21,7 +21,7 @@ After cloning the repo follow these steps to get started:
 
 ## Building:
 
-Branches are automatically built by Travis CI and deploye to https://model-feedback.concord.org .
+Branches are automatically built by Travis CI and deployed to https://model-feedback.concord.org .
 
 ## Details:
 
@@ -30,13 +30,13 @@ The event stream is monitored and compared to a feedback decision tree. The deci
 
 ![Block Diagram](html/block-diagram.jpg)
 1. The CC-Log-Manager event stream is listened to for key events.
-1. `Detectors` identify seqeunces of low level events, and emit new symantic events of interest.
-3. `Factors` (labeled numberic values) are updated when high-level events are observed.
+1. `Detectors` identify sequences of low level events, and emit new semantic events of interest.
+3. `Factors` (labeled numeric values) are updated when high-level events are observed.
 4. One or more `DecisionTree`s are evaluated. These trees use the state of `Factors` to evaluate  its `conditions` and determine `results`.
 5. Feedback items are displayed as `results` (terminal condition nodes).
 
 
-## Creating a new ModelFeedback script:
+## Creating a new `ModelFeedback` script:
 
 This is two step process:
 1. Create a new Typescript class in `src/lara-approved-scripts`
@@ -50,7 +50,7 @@ Your classes constructor should have a signature matching this:
 ```
   constructor(conf:any, context:Context) { … }
 ```
-Any user-specified data from LARA (such as DecisionTree JSON) is passed into `conf`. `context` includes data set by the LARA Runtime system, and can safely be ignored.
+Any user-specified data from LARA (such as `DecisionTree` JSON) is passed into `conf`. `context` includes data set by the LARA Runtime system, and can safely be ignored.
 
 After your class has been defined, you must expose it to LARA:
 
@@ -63,7 +63,8 @@ The `identifier` is a string of your choosing, which should uniquely identify th
 
 #### Modify `webpack.config.js` to create a new build target for webpack.
 
-Look for the section named `etry: {` and add a new target label for your script. Dollow the example in the `debugging` target. The script source `<yourclass>.ts` should be the file you just added in step 1.
+Look for the section named `entry: {` and add a new target label for your
+script. Follow the example in the `debugging` target. The script source `<yourclass>.ts` should be the file you just added in step 1.
 
 ```
   module.exports = {
@@ -79,7 +80,7 @@ Look for the section named `etry: {` and add a new target label for your script.
 
 * `__tests__` → Jest test files.
 * `components` → React views
-* `confined-model` → WellManager, LayerHelper, and Decision Tree for confined model.
+* `confined-model` → `WellManager`, `LayerHelper`, and Decision Tree for confined model.
 * `detectors` → Event detectors
 * `lara-approved-scripts` → Code entry points for Lara
 * `models` → Decision Tree JSON files  (note these are just for reference, because the idea is that)
@@ -89,4 +90,5 @@ There are other 'junk' directories that should be cleaned up eventually.  Sorry 
 
 In the TOP of the source tree there are several interesting files too:
 * `types.ts` defines some useful types, including named `LogEvent` `EVENT_TYPES`.
-* `factor.ts`, `result.ts`, `condition.ts`, and `decision-tree.ts` all define parts of the DecisionTree outlined in the block-diagram (illustrated above).
+* `factor.ts`, `result.ts`, `condition.ts`, and `decision-tree.ts` all define
+  parts of the `DecisionTree` outlined in the block-diagram (illustrated above).

@@ -1,14 +1,10 @@
-export interface YMap { [key:string]:number; }
+import { YMap, IAquiferMap } from "../well-and-aquifer/aquifer-map";
 
-export interface IAquiferMap {
-  [name:string]: YMap;
-}
-  // rock_bed_confined: YMap;       // Bottom - Solid - lowest Y values
-  // water_table_confined: YMap;    // 2ⁿᵈ Layer
-  // rock_ceiling_confined: YMap;   // 3ʳᵈ Layer
-  // rock_bed_unconfined: YMap;     // 4ᵗʰ Layer
-  // water_table_unconfined: YMap;  // Top.
-
+// rock_bed_confined: YMap;       // Bottom - Solid - lowest Y values
+// water_table_confined: YMap;    // 2ⁿᵈ Layer
+// rock_ceiling_confined: YMap;   // 3ʳᵈ Layer
+// rock_bed_unconfined: YMap;     // 4ᵗʰ Layer
+// water_table_unconfined: YMap;  // Top.
 
 export const AquiferMap:IAquiferMap = {
    "rock_bed_confined": {
