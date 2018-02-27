@@ -1,5 +1,5 @@
-import { IAquiferMap } from "../confined-model/aquifer-map";
-import { Well } from "../confined-model/well-manager";
+import { IAquiferMap } from "../well-and-aquifer/aquifer-map";
+import { Well } from "../well-and-aquifer/well";
 import { LayerHelper } from "../confined-model/layer-helper";
 
 const layers:IAquiferMap = {
@@ -78,7 +78,7 @@ describe('LayerHelper', () => {
     });
     it("at depth 20", () => {
       well.y=20;
-      expect(layerHelper.layerFor(well).name).toBe('water_table_unconfined');
+      expect(layerHelper.layerFor(well).name).toBe('');
     });
   });
   describe('wells at X=2', () =>{
@@ -117,7 +117,7 @@ describe('LayerHelper', () => {
     });
     it("at depth 20", () => {
       well.y=20;
-      expect(layerHelper.layerFor(well).name).toBe('water_table_unconfined');
+      expect(layerHelper.layerFor(well).name).toBe('');
     });
   });
   describe('wells at X=3', () =>{
@@ -156,7 +156,7 @@ describe('LayerHelper', () => {
     });
     it("at depth 20", () => {
       well.y=20;
-      expect(layerHelper.layerFor(well).name).toBe('rock_ceiling_confined');
+      expect(layerHelper.layerFor(well).name).toBe('');
     });
   });
 

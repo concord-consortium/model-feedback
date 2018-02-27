@@ -1,5 +1,5 @@
-
-import { WellManager, Well } from "../confined-model/well-manager";
+import { Well } from "../well-and-aquifer/well";
+import { WellManager } from "../confined-model/well-manager";
 
 let wellManager:WellManager;
 

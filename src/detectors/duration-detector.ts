@@ -4,44 +4,51 @@ import { Factor } from "../factor";
 
 import { BasicDetector } from "./basic-detector";
 
-const NEW_INTERVAL = "model-feedback-new-interval";
+const NEW_INTERVAL = "duration-detector-new-interval";
 
 export class DurationDetector extends BasicDetector {
-  stop: EventMatcher;
   start: EventMatcher;
-  running: boolean;
+  stop: EventMatcher;
   factor: Factor;
   lastStartTime: number;
+  intervals: number[];
+  protected avgmode: boolean;
 
-  constructor(start:EventMatcher, stop:EventMatcher, _factor:Factor, _handlers:EventHandler[]=[]) {
+  constructor(start:EventMatcher, stop:EventMatcher, _factor:Factor, _handlers:EventHandler[]=[], _avg=false) {
     super(_factor, _handlers);
-    this.running = false;
     this.start = start;
     this.stop = stop;
+    this.lastStartTime = 0.0;
+    this.intervals = [];
+    this.avgmode = _avg;
   }
 
   handleEvent(event:LogEvent) {
     super.handleEvent(event);
-    if(this.start(event)) {
+    if (this.start(event))
       this.lastStartTime = nTimeStamp();
-      this.running = true;
-    }
-    if(this.stop(event))  {
-      this.updateInterval();
-      this.running = false;
-    }
-    // for all events we record new interval if we are running
-    if(this.running && event.parameters && (event.parameters.action !== NEW_INTERVAL)){
-      this.updateInterval();
+    if (this.stop(event))  {
+      if (this.lastStartTime) {
+        const now = nTimeStamp ();
+        const dts = (now - this.lastStartTime)/1000;
+        this.intervals.push (dts);
+        this.updateInterval (dts);
+      }
+      this.lastStartTime = 0.0;
     }
   }
 
-  updateInterval() {
-    const now = nTimeStamp();
-    const dts = (now - this.lastStartTime)/1000;
-    this.factor.value = this.factor.value + dts;
+  updateInterval(dts: number) {
+    if (this.avgmode) {
+      if (this.intervals.length)
+        this.factor.value = this.intervals.reduce ((a, b) => a + b, 0.0)
+          / this.intervals.length;
+      else
+        this.factor.value = 0.0;
+    } else
+      this.factor.value = this.intervals.reduce ((a, b) => a + b, 0.0);
     this.log({
-      action: NEW_INTERVAL,
+      action: (this.avgmode? 'avg-':'') + NEW_INTERVAL,
       factor: this.factor.label,
       newInterval: dts,
       description: this.factor.description,

@@ -10,6 +10,7 @@ module.exports = {
     'feedbackView': ["./src/lara-approved-scripts/feedback-view.ts"],
     'debugging': ["./src/lara-approved-scripts/event-debugging.ts"],
     'confined': ["./src/lara-approved-scripts/confined.ts"],
+    'supply': ["./src/lara-approved-scripts/supply.ts"],
     // TODO: Minimize this again later
     // 'model-feedback-lib.min': ["./src/index.ts"],
     'demo': ["./src/demo.ts"]

@@ -1,36 +1,40 @@
 import { Logger, EventListener, LogEvent, Detector, EVENT_TYPES } from "../types";
 import { Factor, FactorMap, FactorsFromJson } from "../factor";
 import { ModelRuntimeDetector } from "../detectors/model-run-time-detector";
-import { WellDetector } from "../detectors/well-detector-confined";
+import { WellDetector } from "../detectors/well-detector-supply";
 import { RainProbablityDetector } from "../detectors/rain-probability-detector";
 import { DecisionTree, DecisionTreeFromJson } from "../decision-tree";
 import { Context, ExternalScriptHost } from "../external-script-interfaces";
-import { WellManager } from "../confined-model/well-manager";
+import { WellManager } from "../supply-model/well-manager";
 
-const externalScriptName = "confined";
-export class Confined implements EventListener, Logger {
+const externalScriptName = "supply";
+export class Supply implements EventListener, Logger {
   description: string;
   name: string;
   mainLogger: Logger | null;
   detectors: Detector[];
   map: FactorMap;
-  wellManager: WellManager;
+  wellManagerFB: WellManager;
+  wellManagerNF: WellManager;
   dtree: DecisionTree;
 
 
   constructor(conf:any, context:Context) {
-    this.description = "monitor confined aquifer model student interactions for feedback.";
+    this.description = "monitor supply model student interactions for feedback.";
     this.name = externalScriptName;
     this.createFactorMap(conf.model);
     this.dtree = DecisionTreeFromJson(conf.model);
-    this.wellManager = new WellManager();
+    this.wellManagerFB = new WellManager();
+    this.wellManagerNF = new WellManager();
     const sendUpstream = (evt:LogEvent) => this.log(evt);
     this.detectors = [
-      new ModelRuntimeDetector(this.map.mt, [sendUpstream], true),
-      new RainProbablityDetector(this.map.rp_a, this.map.rp_r, [sendUpstream]),
-      new WellDetector(this.map.co, this.map.uo, this.wellManager, [sendUpstream])
+      new ModelRuntimeDetector(this.map.m_tt1, [sendUpstream]),
+      new WellDetector(this.map.n_fb_rur1, this.map.n_nf_rur1, this.map.n_fb_urb1, this.wellManagerFB, this.wellManagerNF, [sendUpstream])
     ];
   }
+
+  // TODO (?): refactor this class so that it shares the same base with
+  //           confined The methods below are repeated from that model.
 
   createFactorMap(data:any) {
     this.map = FactorsFromJson(data.factors).map;
@@ -68,4 +72,4 @@ export class Confined implements EventListener, Logger {
 }
 
 const context:ExternalScriptHost = (window as any).ExternalScripts;
-context.register(externalScriptName, Confined);
+context.register(externalScriptName, Supply);
