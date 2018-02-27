@@ -16,7 +16,7 @@ export class WellManager extends WellManagerBase {
   }
 
   activeUnconfinedCount() {
-    return this.livingWells().filter((w) => w.confined && w.canPump).length;
+    return this.livingWells().filter((w) => ! w.confined && w.canPump).length;
   }
 
   livingWells() : Well[] {
@@ -26,22 +26,6 @@ export class WellManager extends WellManagerBase {
       w.confined = this.layerHelper.isConfined(w);
     })
     return ans
-  }
-
-  splitAmount(flow:number){
-    let unconfined = this.activeUnconfinedCount();
-    let confined = this.activeConfinedCount();
-    const total = confined + unconfined;
-    if (total < 1) {
-      confined = 0;
-      unconfined = 0;
-    } else {
-      confined = confined/total;
-      unconfined = unconfined/total;
-    }
-    confined = confined * flow;
-    unconfined = unconfined * flow;
-    return({confined, unconfined});
   }
 
   stats() {

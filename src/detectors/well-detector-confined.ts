@@ -102,7 +102,7 @@ export class WellDetector extends BasicDetector {
     // based on the crude sparse information given by the logdata.
     if (this.lastTime) {
       this.totalIntegral += 0.5 * (newTotal + this.lastTotal) *
-        (thisTime - this.lastTime);
+        (thisTime - this.lastTime) / 1000;
     } else // The Unix Epoch time means that integral did not start.
       this.totalIntegral = 0;
     this.lastTime = thisTime
