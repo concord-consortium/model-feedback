@@ -6,11 +6,11 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
+    'trap': ["./src/lara-approved-scripts/trap.ts"],
     'aquifer': ["./src/lara-approved-scripts/aquifer.ts"],
+    'supply': ["./src/lara-approved-scripts/supply.ts"],
     'feedbackView': ["./src/lara-approved-scripts/feedback-view.ts"],
     'debugging': ["./src/lara-approved-scripts/event-debugging.ts"],
-    'confined': ["./src/lara-approved-scripts/confined.ts"],
-    'supply': ["./src/lara-approved-scripts/supply.ts"],
     // TODO: Minimize this again later
     // 'model-feedback-lib.min': ["./src/index.ts"],
     'demo': ["./src/demo.ts"]

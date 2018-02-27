@@ -1,6 +1,6 @@
 import { IAquiferMap } from "../well-and-aquifer/aquifer-map";
 import { Well } from "../well-and-aquifer/well";
-import { LayerHelper } from "../confined-model/layer-helper";
+import { LayerHelper } from "../aquifer-model/layer-helper";
 
 const layers:IAquiferMap = {
   rock_bed_confined: {

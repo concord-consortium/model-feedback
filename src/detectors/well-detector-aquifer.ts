@@ -1,10 +1,10 @@
 import { EventHandler, LogEvent, EVENT_TYPES} from "../types";
 import { Factor } from "../factor";
 import { BasicDetector } from "./basic-detector";
-import { WellManager } from "../confined-model/well-manager";
+import { WellManager } from "../aquifer-model/well-manager";
 import { NumberMap, ReserveableNumbersTracker as WellTracker } from "../types";
 
-export class WellDetector extends BasicDetector {
+export class AquiferWellDetector extends BasicDetector {
   wellManager:WellManager;
   wellTracker: WellTracker;
   confinedFactor: Factor;

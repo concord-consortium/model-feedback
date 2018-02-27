@@ -2,8 +2,8 @@
 
 model  | name in `HASBOT` docs | name in code
  :-: | :--: | :--:
- 1 | trap | aquifer
- 2 | aquifer | confined
+ 1 | trap | trap
+ 2 | aquifer | aquifer
  3 | supply | supply
 
 In this document, all names used are those in the **name in code** column.
@@ -16,9 +16,9 @@ The following is an approximately full list of the work that Sam did around
 Feb 25 and Feb 26 of 2018.  All folder names and file names are to be
 understood as names relative to the `src` folder of this repository.
 
-* Factored out some classes from model `confined`, put them in a new folder
+* Factored out some classes from model `aquifer`, put them in a new folder
   `well-and-aquifer`, and make them base classes, which are inherited by
-  model-specific classes in both the confined model and the supply model.
+  model-specific classes in both the aquifer model and the supply model.
 
   * Made `Well` class have more optional attributes such as `urban` and
     `canPump`.
@@ -30,7 +30,7 @@ understood as names relative to the `src` folder of this repository.
   this 3rd feedback module.
 
 * Created folder `supply-model` and created three new files, modeling them
-  after those in `confined-model`.  Probably some further refactoring of the
+  after those in `aquifer-model`.  Probably some further refactoring of the
   files in these two models is worthwhile in the future.
 
 * Created new file  `detectors/well-detector-supply.ts`, which is a new well
@@ -55,18 +55,18 @@ understood as names relative to the `src` folder of this repository.
   * Removed folder `Detectors` (probably a redundant left-over before this
     folder got renamed to `detectors`).
 
-  * Removed `confined-model/dt-model.ts` (a redundant copy of
-    `models/confined-model.ts`).
+  * Removed `aquifer-model/dt-model.ts` (a redundant copy of
+    `models/aquifer-model.ts`).
 
-  * The `../confined-model` has been moved as a sub-folder to a new folder
+  * The `../aquifer-model` has been moved as a sub-folder to a new folder
     `../info`.
 
-# Changes made to model 2 (`confined`)
+# Changes made to model 2 (`aquifer`)
 
   * Corrected the following issues (all are related to making the typescript
     code consistent with how the decision tree was determined originally):
 
-    * `WellManager` (in file `confined-model/well-manager`): wells were
+    * `WellManager` (in file `aquifer-model/well-manager`): wells were
       classified as "confined" or "unconfined" without consideration of
       whether the wells were touching the (initial) water.  This is fixed now
       (using the new `canPump` attribute, also mentioned above).
@@ -78,7 +78,7 @@ understood as names relative to the `src` folder of this repository.
   * The duration detectors in `detector/duration-detector.ts` and
     `detector/model-run-time-detector.ts` now support optional argument
     `_avg` for the average duration mode, rather than the total duration mode.
-    The average time is what we need for the `confined` model, and this is
+    The average time is what we need for the `aquifer` model, and this is
     now what is computed.
 
 # Things to do, or consider
