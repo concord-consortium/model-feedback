@@ -92,7 +92,9 @@ export class AquiferWellDetector extends BasicDetector {
 
   emitWellData(event:LogEvent) {
     const {confined, unconfined} = this.wellTracker.totals ();
-    const newTotal = Object.keys(event.parameters)
+    // NP 2018-03-08: We often don't have well data. (or event event.parameters) …
+    // this was throwing a runtime exception becuase event.parameters was null.
+    const newTotal = Object.keys(event.parameters || {})
       .filter( (k) => k.match(/^well/))
       .map( (k) => event.parameters[k])
       .reduce( (p,c) => p+c, 0);
