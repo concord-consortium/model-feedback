@@ -16,7 +16,7 @@ export const Model:string = `
         {"label": "C3", "factor": "m_n1", "expression": "> ", "value": 2,  "yes": "NONE",  "no": "MF_R3"}
       ],
       "results": [
-        {"label": "MF_R1", "score": 1, "feedback": "Run the model and observe what happends to water as it moves underground."},
+        {"label": "MF_R1", "score": 1, "feedback": "Run the model and observe what happens to water as it moves underground."},
         {"label": "MF_R2", "score": 2, "feedback": "It looks like you did not spend enough time with the model! Run the model again  until a pool of water reaches the surface."},
         {"label": "MF_R3", "score": 3, "feedback": "It looks like you ran the model long enough, but you let the model run in a long stretch.  For making effective observations, it may help if you stop the simulation after a while, reflect on what you observed so far, and then restart or reload the simulation."},
         {"label": "NONE", "score": 4, "feedback": ""}
