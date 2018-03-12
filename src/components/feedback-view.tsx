@@ -106,7 +106,9 @@ export class FeedbackView
   }
 
   private displayFeedback(params:FeedbackEventParams) {
-    if(! this.state.hasBeenShown ) {
+    const needToShow:boolean = params.feedbackItems.some
+      ((s: string) => s.trim () !== "");
+    if(needToShow && ! this.state.hasBeenShown ) {
       this.startTime =  nTimeStamp();
       this.setState({
         showing: true,
