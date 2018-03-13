@@ -35,9 +35,12 @@ export class WellDetector extends BasicDetector {
   reInit() {
     this.wellManagerFB.reinit();
     this.wellManagerNF.reinit();
-    this.fb_well_tracker.reInit ();
-    this.nf_well_tracker.reInit ();
     this.model_is_on = false;
+    // If we collect cumulative statistics on well data across reload events,
+    // which we do now, then we should NOT call reInit methods here.  But, we
+    // must cancel reservations.
+    this.fb_well_tracker.cancelReserved ();
+    this.nf_well_tracker.cancelReserved ();
   }
 
   // Here, we must carefully coordinate our well trackers with model run
@@ -55,13 +58,13 @@ export class WellDetector extends BasicDetector {
         this.emitWellData(event);
         break;
       case EVENT_TYPES.STOPED_MODEL:
-      case EVENT_TYPES.RELOADED_MODEL:
         this.model_is_on = false;
         // no break---must pass through here.
       // ARG_BLOCK_SUBMIT: considered "stop model" for our purpose here.
       case EVENT_TYPES.ARG_BLOCK_SUBMIT:
         this.emitWellData(event);
         break;
+      case EVENT_TYPES.RELOADED_MODEL:
       case EVENT_TYPES.RELOADED_INTERACTIVE:
         this.emitWellData(event);
         this.reInit();

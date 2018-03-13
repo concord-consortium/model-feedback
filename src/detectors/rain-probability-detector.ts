@@ -30,12 +30,25 @@ export class RainProbablityDetector extends BasicDetector {
     switch(event.event) {
       case EVENT_TYPES.STARTED_MODEL:
       case EVENT_TYPES.STOPED_MODEL:
-      case EVENT_TYPES.RELOADED_MODEL:
         this.updateFromLoadEvent(event);
         break;
+      case EVENT_TYPES.RELOADED_MODEL:
       case EVENT_TYPES.RELOADED_INTERACTIVE:
         this.updateFromLoadEvent(event);
-        this.reInit();
+        ////
+        // 03-13-2018:  For the factors to be computed cumulatively over
+        // RELOAD events, it is more correct to NOT call reInit here.  One
+        // side effect of not calling reInit would be that if student reloads
+        // and then, only after a long break, restarts the model, then the
+        // average value computed will be wrong (as it is computed as time
+        // average---see below).  This, however, should be a rare occurence,
+        // as students reloads usually when they think that some things are
+        // going wrong and want to reload and restart the model.  To do the
+        // time average properly in that type of edge case may take a
+        // significant rewrite (?).
+        //
+        // this.reInit();
+        break; // was missing, I think.
       case EVENT_TYPES.SLIDER_CHANGED:
         this.updateFromSliderEvent(event);
         break;

@@ -15,7 +15,7 @@ export class ModelRuntimeDetector extends DurationDetector {
           // data obtained just before the first argblock submit.  So, this is
           // OK for now.
           case EVENT_TYPES.ARG_BLOCK_SUBMIT:
-              return true;
+            return true;
           default:
             return false;
         }
