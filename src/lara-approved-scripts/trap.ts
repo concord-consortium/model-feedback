@@ -29,6 +29,7 @@ export class TrapFeedback implements EventListener, Logger {
       return (
         (e.event === EVENT_TYPES.BUTTON_CLICKED) &&
         (e.parameters.label === "Stop following")) ||
+        (e.event === EVENT_TYPES.RELOADED_INTERACTIVE) ||
         (e.event === EVENT_TYPES.RELOADED_MODEL);
     };
     const sendUpstream = (evt:LogEvent) => this.log(evt);

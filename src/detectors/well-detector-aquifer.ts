@@ -13,6 +13,10 @@ export class AquiferWellDetector extends BasicDetector {
   lastTime: number;
   lastTotal: number;
   model_is_on: boolean;
+  // Factor values must be computed cumulatively accross reload events.
+  // These two new attributes serve that purpose.
+  baselineConfinedFV: number;
+  baselineUnconfinedFV: number;
 
   constructor(
     _confinedFactor:Factor,
@@ -25,6 +29,8 @@ export class AquiferWellDetector extends BasicDetector {
       this.wellManager = _wellManager;
       this.wellTracker = new WellTracker ();
       this.reInit();
+      this.baselineConfinedFV = 0;
+      this.baselineUnconfinedFV = 0;
   }
 
   reInit() {
@@ -45,15 +51,17 @@ export class AquiferWellDetector extends BasicDetector {
         this.emitWellData(event);
         break;
       case EVENT_TYPES.STOPED_MODEL:
-      case EVENT_TYPES.RELOADED_MODEL:
         this.model_is_on = false;
         // no break---must pass through here.
       // ARG_BLOCK_SUBMIT: considered "stop model" for our purpose here.
       case EVENT_TYPES.ARG_BLOCK_SUBMIT:
         this.emitWellData(event);
         break;
+      case EVENT_TYPES.RELOADED_MODEL:
       case EVENT_TYPES.RELOADED_INTERACTIVE:
-        this.emitWellData(event);
+        // As we are now tracking data across reload events, we must remember
+        // baseline factor values before reInit
+        this.emitWellData(event, true);
         this.reInit();
         break;
       case EVENT_TYPES.WELL_ADDED_NF:
@@ -90,7 +98,7 @@ export class AquiferWellDetector extends BasicDetector {
     this.updateWellTracker ();
   }
 
-  emitWellData(event:LogEvent) {
+  emitWellData(event:LogEvent, updateBaselines:boolean = false) {
     const {confined, unconfined} = this.wellTracker.totals ();
     // NP 2018-03-08: We often don't have well data. (or event event.parameters) …
     // this was throwing a runtime exception becuase event.parameters was null.
@@ -107,8 +115,8 @@ export class AquiferWellDetector extends BasicDetector {
         (thisTime - this.lastTime) / 1000;
     } else // The Unix Epoch time means that integral did not start.
       this.totalIntegral = 0;
-    this.lastTime = thisTime
-    this.lastTotal = newTotal
+    this.lastTime = thisTime;
+    this.lastTotal = newTotal;
     const allpumpingwells = confined + unconfined;
     if (allpumpingwells) {
       this.confinedFactor.value = this.totalIntegral * confined /
@@ -119,15 +127,23 @@ export class AquiferWellDetector extends BasicDetector {
       this.confinedFactor.value = 0;
       this.unconfinedFactor.value = 0;
     }
-
+    this.confinedFactor.value += this.baselineConfinedFV;
+    this.unconfinedFactor.value += this.baselineUnconfinedFV;
     this.emit({
       event: "well-output-report",
       parameters: {
-        totalIntegral: this.totalIntegral,
+        totalIntegral: this.totalIntegral + this.baselineConfinedFV
+            + this.baselineUnconfinedFV,
         confined: this.confinedFactor.value,
         unconfined: this.unconfinedFactor.value
       }
     });
+    if (updateBaselines) {
+      console.log ('== SPECIAL!: reInit must be about to be called, since we are updating baseline values for well outputs.');
+      // This should occur only just before reInit is called.
+      this.baselineConfinedFV = this.confinedFactor.value;
+      this.baselineUnconfinedFV = this.unconfinedFactor.value;
+    }
   }
 
 }

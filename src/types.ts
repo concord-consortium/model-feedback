@@ -104,7 +104,7 @@ export class ReserveableNumbersTracker implements NumbersTracker {
 
   reInit (): void {
     this.num_maps = [];
-    this.reserved = null;
+    this.cancelReserved ();
   }
 
   add (numbers: NumberMap): void {
@@ -139,6 +139,10 @@ export class ReserveableNumbersTracker implements NumbersTracker {
         .reduce(sum_func, 0.0);
     });
     return ans;
+  }
+
+  cancelReserved () {
+    this.reserved = null;
   }
 
   consumeReserved () {
