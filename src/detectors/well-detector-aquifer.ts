@@ -139,7 +139,6 @@ export class AquiferWellDetector extends BasicDetector {
       }
     });
     if (updateBaselines) {
-      console.log ('== SPECIAL!: reInit must be about to be called, since we are updating baseline values for well outputs.');
       // This should occur only just before reInit is called.
       this.baselineConfinedFV = this.confinedFactor.value;
       this.baselineUnconfinedFV = this.unconfinedFactor.value;
