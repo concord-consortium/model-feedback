@@ -80,13 +80,13 @@ export class DtTestView extends React.Component<
     const factors = this.state.factors || {};
     const keys = Object.keys(factors);
     return(
-      <div id="inputs">
+      <div className="inputs">
         {
           keys.map((k) => {
             const factor = factors[k];
             return factor ? this.renderFactor(factor) : null;
           })
-        };
+        }
       </div>
     );
   }
@@ -102,7 +102,7 @@ export class DtTestView extends React.Component<
             name="model"
             id="model"
             cols={130}
-            rows={40}
+            rows={20}
             onChange={ (e:any) => this.updateDtModel.bind(this)(e)}
             value={this.state.dtJson}/>
         </div>
