@@ -13,7 +13,8 @@ module.exports = {
     'debugging': ["./src/lara-approved-scripts/event-debugging.ts"],
     // TODO: Minimize this again later
     // 'model-feedback-lib.min': ["./src/index.ts"],
-    'demo': ["./src/demo.ts"]
+    'demo': ["./src/demo.ts"],
+    'tester': ["./src/components/dt-test-view.tsx"]
   },
 
   output: {

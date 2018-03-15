@@ -1,0 +1,55 @@
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 20pt;
+      color: hsl(30,20%,20%);
+      background-color: aliceblue;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+    div {
+      margin: 0.25em;
+      padding: 0.25em;
+    }
+    .column {
+      display: flex;
+      flex-direction: column;
+      width: 50vw;
+    }
+    .factor {
+      padding: 0.5em;
+      background-color: hsla(230, 10%, 96%, 1);
+    }
+    .factorLabel {
+      font-size: 20pt;
+      margin: 0pt;
+      font-weight: bold;
+      color: hsla(230, 5%, 10%, 1);
+    }
+    .description {
+      font-family: sans-serif;
+      font-size: 12pt;
+    }
+    .results {
+      font-family: sans-serif;
+      font-size: 20pt;
+      border-radius: 0.25em;
+      background-color: hsla(230, 50%, 90%, 1);
+    }
+    textarea {
+      width: 100%;
+    }
+  </style>
+  <script src="tester.js"></script>
+  <title>model feedback library (links)</title>
+</head>
+  <body>
+    <div id="root">
+    </div>
+  </body>
+  <script>renderTest()</script>
+</html>
