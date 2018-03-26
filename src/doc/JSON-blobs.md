@@ -86,7 +86,7 @@ JSON blobs when you need to tweak them.
       {
         "label": "MF_R1",
         "score": 1,
-        "feedback": "Run the model and observe what happens to water as it moves underground."
+        "feedback": "It looks like you did not spend enough time with the model! Run the model again until a pool of water reaches the surface."
       },
       {
         "label": "MF_R2",
