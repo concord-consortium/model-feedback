@@ -86,17 +86,33 @@ export const Model =
         "label": "C3",
         "factor": "co",
         "expression": ">",
-        "value": 8000,
-        "yes": "C4",
-        "no": "R3"
+        "value": 4000,
+        "yes": "C5",
+        "no": "C4"
       },
       {
         "label": "C4",
+        "factor": "co",
+        "expression": ">",
+        "value": 0,
+        "yes": "R3",
+        "no": "C5"
+      },
+      {
+        "label": "C5",
         "factor": "uo",
         "expression": ">",
         "value": 4000,
         "yes": "R5",
-        "no": "R4"
+        "no": "C6"
+      },
+      {
+        "label": "C6",
+        "factor": "uo",
+        "expression": ">",
+        "value": 0,
+        "yes": "R4",
+        "no": "R5"
       }
     ]
   }

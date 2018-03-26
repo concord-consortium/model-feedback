@@ -35,7 +35,7 @@ export const Model =
       {
         "label": "R2",
         "score": 3,
-        "feedback": "Make sure that there is no flowback well in the urban area but there is a flowback well in the rural area.  Run the model for longer time and see what happens!"
+        "feedback": "Remove the flowback well from the urban area but make sure there is a flowback well in the rural area. Run the model for longer and see what happens!"
       },
       {
         "label": "R3",

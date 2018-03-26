@@ -1,20 +1,18 @@
 # Model names
 
-model  | name in `HASBOT` docs | name in code
- :-: | :--: | :--:
- 1 | trap | trap
- 2 | aquifer | aquifer
- 3 | supply | supply
+The three model names are relevant for this work: `trap`, `aquifer`, and
+`supply`.  When this document was first written, some module names of these
+models did not correspond to these model names, but this issue has been taken
+care of by Noah shortly after Feb 25, and so as of this update (Mar 25),
+these model names appear unchanged in corresponding module names.
 
-In this document, all names used are those in the **name in code** column.
-It is conceivable that we might benefit from changing, later on, names in
-code so that they agree with names in `HASBOT` docs.
-
-# Changes, directly related to work on model 3 (`supply`)
+# What work was done?
 
 The following is an approximately full list of the work that Sam did around
 Feb 25 and Feb 26 of 2018.  All folder names and file names are to be
 understood as names relative to the `src` folder of this repository.
+
+## Changes, directly related to work on model 3 (`supply`)
 
 * Factored out some classes from model `aquifer`, put them in a new folder
   `well-and-aquifer`, and make them base classes, which are inherited by
@@ -61,7 +59,7 @@ understood as names relative to the `src` folder of this repository.
   * The `../aquifer-model` has been moved as a sub-folder to a new folder
     `../info`.
 
-# Changes made to model 2 (`aquifer`)
+## Changes made to model 2 (`aquifer`)
 
   * Corrected the following issues (all are related to making the typescript
     code consistent with how the decision tree was determined originally):
@@ -83,7 +81,7 @@ understood as names relative to the `src` folder of this repository.
 
 # Things to do, or consider
 
-  * Module name clean up (see the first table above).
+  * ~~Module name clean up (see the first table above).~~
 
   * Some modules/things may not be in use and may be cleaned up.
 
