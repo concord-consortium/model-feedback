@@ -1,5 +1,5 @@
 import { Logger, EventListener, LogEvent, Detector, EVENT_TYPES } from "../types";
-import { Factor, FactorMap, FactorsFromJson } from "../factor";
+import { FactorMap, FactorsFromJson } from "../factor";
 import { CountDetector } from "../detectors/count-detector";
 import { DurationDetector } from "../detectors/duration-detector";
 import { ModelRuntimeDetector } from "../detectors/model-run-time-detector";

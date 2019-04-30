@@ -29,7 +29,7 @@ export class Supply implements EventListener, Logger {
     const sendUpstream = (evt:LogEvent) => this.log(evt);
     this.detectors = [
       new ModelRuntimeDetector(this.map.m_tt1, [sendUpstream]),
-      new WellDetector(this.map.n_fb_rur1, this.map.n_nf_rur1, this.map.n_fb_urb1, this.wellManagerFB, this.wellManagerNF, [sendUpstream])
+      new WellDetector(this.map.nFbRur1, this.map.nNfRur1, this.map.nFbUrb1, this.wellManagerFB, this.wellManagerNF, [sendUpstream])
     ];
   }
 

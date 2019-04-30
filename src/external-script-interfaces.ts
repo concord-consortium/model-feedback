@@ -15,9 +15,7 @@ export interface ExternalScript {
   handleEvent(logEvent:LogEvent, log?:Logger): void;
 }
 
-export interface ExternalScriptConstructor {
-  new(config: Config,  ctx: Context): ExternalScript;
-}
+export type ExternalScriptConstructor = new(config: Config,  ctx: Context) => ExternalScript;
 
 export interface ExternalScriptHost {
   _constructors: {[key: string]:() => ExternalScriptConstructor};

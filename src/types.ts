@@ -50,7 +50,7 @@ export const EVENT_TYPES = {
 
 export type Expression = "<" |  "<=" |  "==" |  ">=" | ">";
 
-export interface NumberMap { [s: string]: number };
+export interface NumberMap { [s: string]: number; }
 
 export interface NumbersTracker {
   reInit (): void;
@@ -95,7 +95,7 @@ export class ReserveableNumbersTracker implements NumbersTracker {
   //   then we just keep calling "reserve".  When we know that the model is
   //   running, then we can manually call "consumeReserved."
 
-  num_maps: NumberMap[];
+  numMaps: NumberMap[];
   reserved: NumberMap | null;
 
   constructor () {
@@ -103,40 +103,44 @@ export class ReserveableNumbersTracker implements NumbersTracker {
   }
 
   reInit (): void {
-    this.num_maps = [];
+    this.numMaps = [];
     this.cancelReserved ();
   }
 
   add (numbers: NumberMap): void {
     this.consumeReserved ();
-    this.num_maps.push (numbers);
+    this.numMaps.push (numbers);
   }
 
   allNames (): string[] {
     // Here, ended up using "Arra.from (<Set>.values ())" instead of
     // [...<Set>] because typescript keeps complaining about it...
     // mistakenly? ("Set<string>" is not an array type).
-    return this.num_maps.map ((m) => Object.keys (m))
+    return this.numMaps.map ((m) => Object.keys (m))
       .reduce ((a, b) => Array.from(new Set ([...a, ...b]).values ()), []);
   }
 
   averages (): NumberMap {
     let ans = this.totals ();
-    const N = this.num_maps.length;
-    if (N)
-      for (let name in ans)
-        ans[name] /= N;
+    const N = this.numMaps.length;
+    if (N) {
+      for (let name in ans) {
+        if (ans.hasOwnProperty(name)) {
+          ans[name] /= N;
+        }
+      }
+    }
     return ans;
   }
 
   totals (): NumberMap {
-    let all_names = this.allNames();
+    let allNames = this.allNames();
     let ans: {[s: string]: number} = {};
-    let sum_func = (a: number, b: number): number => a + b;
-    this.num_maps.map ((m) => console.log (m))
-    all_names.forEach ((name) => {
-      ans[name] = this.num_maps.map((m) => m[name] || 0.0)
-        .reduce(sum_func, 0.0);
+    let sumFunc = (a: number, b: number): number => a + b;
+    this.numMaps.map ((m) => console.log (m));
+    allNames.forEach ((name) => {
+      ans[name] = this.numMaps.map((m) => m[name] || 0.0)
+        .reduce(sumFunc, 0.0);
     });
     return ans;
   }
@@ -149,7 +153,7 @@ export class ReserveableNumbersTracker implements NumbersTracker {
     // Everything except null is a meaningful value.  For example, an emtpy
     // mapping is also a meaningful value.   So, here we do a strict
     // comparison with null.
-    if (this.reserved === null) return;
+    if (this.reserved === null) { return; }
     let reserved = this.reserved;
     this.reserved = null; // important to avoid an infinite loop!
     this.add (reserved);

@@ -25,8 +25,9 @@ export class DurationDetector extends BasicDetector {
 
   handleEvent(event:LogEvent) {
     super.handleEvent(event);
-    if (this.start(event))
+    if (this.start(event)) {
       this.lastStartTime = nTimeStamp();
+    }
     if (this.stop(event))  {
       if (this.lastStartTime) {
         const now = nTimeStamp ();
@@ -40,13 +41,16 @@ export class DurationDetector extends BasicDetector {
 
   updateInterval(dts: number) {
     if (this.avgmode) {
-      if (this.intervals.length)
+      if (this.intervals.length) {
         this.factor.value = this.intervals.reduce ((a, b) => a + b, 0.0)
           / this.intervals.length;
-      else
+      }
+      else {
         this.factor.value = 0.0;
-    } else
+      }
+    } else {
       this.factor.value = this.intervals.reduce ((a, b) => a + b, 0.0);
+    }
     this.log({
       action: (this.avgmode? 'avg-':'') + NEW_INTERVAL,
       factor: this.factor.label,

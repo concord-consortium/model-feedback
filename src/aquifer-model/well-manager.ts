@@ -24,8 +24,8 @@ export class WellManager extends WellManagerBase {
     ans.forEach((w) => {
       w.canPump = this.layerHelper.canPump (w);
       w.confined = this.layerHelper.isConfined(w);
-    })
-    return ans
+    });
+    return ans;
   }
 
   stats() {
