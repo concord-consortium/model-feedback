@@ -48,7 +48,11 @@ module.exports = {
   stats: {
     colors: true
   },
-
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM',
+    '@concord-consortium/lara-plugin-api': 'LARA.PluginAPI'
+  },
   plugins: [
     new CleanWebpackPlugin(["dist/"], {}),
     new CopyWebpackPlugin([{

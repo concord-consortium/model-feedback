@@ -11,7 +11,7 @@
   "scripts": {
     "watch": "webpack --watch",
     "test": "jest",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server --no-inline"
   },
   "contributors": [
     {
@@ -61,5 +61,8 @@
     "webpack-cli": "^3.3.1",
     "webpack-dev-server": "^3.3.1",
     "yarn": "^1.5.1"
+  },
+  "dependencies": {
+    "@concord-consortium/lara-plugin-api": "file:../lara/lara-typescript/dist/plugin-api"
   }
 }

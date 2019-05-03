@@ -10,9 +10,6 @@ export interface Logger {
   log(event:LogEvent): void;
 }
 
-export interface EventListener {
-  handleEvent(data:LogEvent, log?:Logger|null): void;
-}
 export interface Detector {
   factor: Factor;
   handleEvent(event:LogEvent): void;

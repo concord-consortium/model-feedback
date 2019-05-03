@@ -3,7 +3,8 @@ import * as React from "react";
 import { Factor } from "../factor";
 import { CloseButtonView } from "./close-button";
 import { ReopenButton } from "./reopen-button";
-import { Logger, LogEvent, EventListener, EVENT_TYPES, nTimeStamp} from "../types";
+import { Logger, LogEvent, EVENT_TYPES, nTimeStamp} from "../types";
+import * as PluginAPI from "@concord-consortium/lara-plugin-api";
 
 const ROBOT_IMAGE_URL = "https://model-feedback.concord.org/rain-bot.png";
 const DOM_SELECT_FOR_BUTTON = ".ab-robot-analysis";
@@ -28,9 +29,8 @@ export class FeedbackView
   extends React.Component<
           FeedbackProps,
           FeedbackState>
-  implements EventListener, Logger {
+  implements Logger {
 
-  mainLogger: Logger;
   reopenButton: ReopenButton | null;
   reopenCount: number;
   startTime: number;
@@ -89,13 +89,10 @@ export class FeedbackView
   }
 
   log(logEvent:LogEvent, logger?:Logger) {
-    if(this.mainLogger) {
-      this.mainLogger.log(logEvent);
-    }
+    PluginAPI.log(logEvent);
   }
 
-  handleEvent(logEvent:LogEvent, logger?:Logger) {
-    if(!this.mainLogger && logger) { this.mainLogger = logger; }
+  handleEvent(logEvent:LogEvent) {
     switch(logEvent.event) {
       case(EVENT_TYPES.DISPLAY_MODEL_FEEDBACK):
         this.displayFeedback(logEvent.parameters);
@@ -140,7 +137,7 @@ export class FeedbackView
       bottom: "0px",
       left: "0px",
       right: "0px",
-      zOrder: "100",
+      zIndex: 100,
       backgroundColor: backgroundColor,
       display: this.state.showing ? "flex" : "none",
       alignItems: "center",
