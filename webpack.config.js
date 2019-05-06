@@ -13,7 +13,6 @@ module.exports = {
     'debugging': ["./src/lara-approved-scripts/event-debugging.ts"],
     // TODO: Minimize this again later
     // 'model-feedback-lib.min': ["./src/index.ts"],
-    'demo': ["./src/demo.ts"]
   },
 
   output: {
@@ -25,20 +24,34 @@ module.exports = {
   },
   devtool: "source-map",
   module: {
-    loaders: [
-      // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
+    rules: [
       {
         test: /\.tsx?$/,
-        loader: "awesome-typescript-loader",
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'tslint-loader',
+            options: {}
+          }
+        ]
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
         options: {
-          configFileName: "./tsconfig.json"}
-        },
+          transpileOnly: true // IMPORTANT! use transpileOnly mode to speed-up compilation
+        }
+      }
     ]
   },
   stats: {
     colors: true
   },
-
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM',
+    '@concord-consortium/lara-plugin-api': 'LARA.PluginAPI_V3'
+  },
   plugins: [
     new CleanWebpackPlugin(["dist/"], {}),
     new CopyWebpackPlugin([{

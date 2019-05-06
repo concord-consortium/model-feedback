@@ -7,12 +7,13 @@ import { NumberMap, ReserveableNumbersTracker as WellTracker } from "../types";
 export class WellDetector extends BasicDetector {
   wellManagerFB:WellManager;
   wellManagerNF:WellManager;
+  // tslint:disable:variable-name
   n_fb_rur: Factor;
   n_nf_rur: Factor;
   n_fb_urb: Factor;
-  fb_well_tracker: WellTracker;
-  nf_well_tracker: WellTracker;
-  model_is_on: boolean;
+  fbWellTracker: WellTracker;
+  nfWellTracker: WellTracker;
+  modelIsOn: boolean;
 
   constructor(
     _n_fb_rur:Factor,
@@ -27,20 +28,20 @@ export class WellDetector extends BasicDetector {
       this.n_fb_urb = _n_fb_urb;
       this.wellManagerFB = _wellManagerFB;
       this.wellManagerNF = _wellManagerNF;
-      this.fb_well_tracker = new WellTracker ();
-      this.nf_well_tracker = new WellTracker ();
+      this.fbWellTracker = new WellTracker ();
+      this.nfWellTracker = new WellTracker ();
       this.reInit();
   }
 
   reInit() {
     this.wellManagerFB.reinit();
     this.wellManagerNF.reinit();
-    this.model_is_on = false;
+    this.modelIsOn = false;
     // If we collect cumulative statistics on well data across reload events,
     // which we do now, then we should NOT call reInit methods here.  But, we
     // must cancel reservations.
-    this.fb_well_tracker.cancelReserved ();
-    this.nf_well_tracker.cancelReserved ();
+    this.fbWellTracker.cancelReserved ();
+    this.nfWellTracker.cancelReserved ();
   }
 
   // Here, we must carefully coordinate our well trackers with model run
@@ -52,13 +53,13 @@ export class WellDetector extends BasicDetector {
   handleEvent(event:LogEvent) {
     switch(event.event) {
       case EVENT_TYPES.STARTED_MODEL:
-        this.model_is_on = true;
-        this.fb_well_tracker.consumeReserved ();
-        this.nf_well_tracker.consumeReserved ();
+        this.modelIsOn = true;
+        this.fbWellTracker.consumeReserved ();
+        this.nfWellTracker.consumeReserved ();
         this.emitWellData(event);
         break;
       case EVENT_TYPES.STOPED_MODEL:
-        this.model_is_on = false;
+        this.modelIsOn = false;
         // no break---must pass through here.
       // ARG_BLOCK_SUBMIT: considered "stop model" for our purpose here.
       case EVENT_TYPES.ARG_BLOCK_SUBMIT:
@@ -93,10 +94,12 @@ export class WellDetector extends BasicDetector {
       'rural': this.wellManagerFB.activeRuralCount (),
       'urban': this.wellManagerFB.activeUrbanCount ()
     };
-    if (this.model_is_on)
-      this.fb_well_tracker.add (numbers);
-    else
-      this.fb_well_tracker.reserve (numbers);
+    if (this.modelIsOn) {
+      this.fbWellTracker.add (numbers);
+    }
+    else {
+      this.fbWellTracker.reserve (numbers);
+    }
   }
 
   updateTrackerNF () {
@@ -104,10 +107,12 @@ export class WellDetector extends BasicDetector {
       'rural': this.wellManagerNF.activeRuralCount (),
       'urban': this.wellManagerNF.activeUrbanCount ()
     };
-    if (this.model_is_on)
-      this.nf_well_tracker.add (numbers);
-    else
-      this.nf_well_tracker.reserve (numbers);
+    if (this.modelIsOn) {
+      this.nfWellTracker.add (numbers);
+    }
+    else {
+      this.nfWellTracker.reserve (numbers);
+    }
   }
 
   updateWellFB(event:LogEvent) {
@@ -133,8 +138,8 @@ export class WellDetector extends BasicDetector {
   }
 
   emitWellData(event:LogEvent) {
-    const {rural: rfb, urban: ufb} = this.fb_well_tracker.averages ();
-    const {rural: rnf, urban: unf} = this.nf_well_tracker.averages ();
+    const {rural: rfb, urban: ufb} = this.fbWellTracker.averages ();
+    const {rural: rnf, urban: unf} = this.nfWellTracker.averages ();
     // Any of the four values that we assigned may be "undefined", because
     // the mapping returned by "averages" can be an empty mapping.
     this.n_fb_rur.value = rfb || 0.0;

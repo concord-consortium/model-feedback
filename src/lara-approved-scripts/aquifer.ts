@@ -1,26 +1,25 @@
-import { Logger, EventListener, LogEvent, Detector, EVENT_TYPES } from "../types";
-import { Factor, FactorMap, FactorsFromJson } from "../factor";
+import { Logger, LogEvent, Detector, EVENT_TYPES } from "../types";
+import { FactorMap, FactorsFromJson } from "../factor";
 import { ModelRuntimeDetector } from "../detectors/model-run-time-detector";
 import { AquiferWellDetector } from "../detectors/well-detector-aquifer";
 import { RainProbablityDetector } from "../detectors/rain-probability-detector";
 import { DecisionTree, DecisionTreeFromJson } from "../decision-tree";
-import { Context, ExternalScriptHost } from "../external-script-interfaces";
 import { WellManager } from "../aquifer-model/well-manager";
+import * as PluginAPI from "@concord-consortium/lara-plugin-api";
 
-const externalScriptName = "aquifer";
-export class Aquifer implements EventListener, Logger {
+export class Aquifer implements Logger {
   description: string;
   name: string;
-  mainLogger: Logger | null;
   detectors: Detector[];
   map: FactorMap;
   wellManager: WellManager;
   dtree: DecisionTree;
 
 
-  constructor(conf:any, context:Context) {
+  constructor(context: PluginAPI.IPluginRuntimeContext) {
     this.description = "monitor aquifer model student interactions for feedback.";
-    this.name = externalScriptName;
+    this.name = "aquifer";
+    const conf = context.authoredState && JSON.parse(context.authoredState);
     this.createFactorMap(conf.model);
     this.dtree = DecisionTreeFromJson(conf.model);
     this.wellManager = new WellManager();
@@ -30,22 +29,22 @@ export class Aquifer implements EventListener, Logger {
       new RainProbablityDetector(this.map.rp_a, this.map.rp_r, [sendUpstream]),
       new AquiferWellDetector(this.map.co, this.map.uo, this.wellManager, [sendUpstream])
     ];
+    PluginAPI.events.onLog((logData: any) => {
+      this.handleEvent(logData);
+    });
   }
 
   createFactorMap(data:any) {
     this.map = FactorsFromJson(data.factors).map;
   }
 
-  log(event:LogEvent) {
-    if(this.mainLogger) {
-      event.parameters.model=this.name;
-      this.mainLogger.log(event);
-    }
+  log(event: LogEvent) {
+    event.parameters.model = this.name;
+    PluginAPI.log(event);
   }
 
-  handleEvent(event: LogEvent, logger:Logger){
+  handleEvent(event: LogEvent){
     this.detectEvents(event);
-    if(! this.mainLogger) { this.mainLogger = logger; }
     if(event.event === EVENT_TYPES.ARG_BLOCK_SUBMIT) {
       const feedback = this.dtree.evaluate(this.map).feedback;
       const factorNames = Object.getOwnPropertyNames(this.map);
@@ -64,8 +63,17 @@ export class Aquifer implements EventListener, Logger {
       detector.handleEvent(event);
     });
   }
-
 }
 
-const context:ExternalScriptHost = (window as any).ExternalScripts;
-context.register(externalScriptName, Aquifer);
+export const initPlugin = () => {
+  if (!PluginAPI || !PluginAPI.registerPlugin) {
+    // tslint:disable-next-line:no-console
+    console.warn("LARA Plugin API not available, Aquifer terminating");
+    return;
+  }
+  // tslint:disable-next-line:no-console
+  console.log("LARA Plugin API available, Aquifer initialization");
+  PluginAPI.registerPlugin("aquifer", Aquifer);
+};
+
+initPlugin();

@@ -1,14 +1,12 @@
-import { Logger, EventListener, LogEvent, Detector, EVENT_TYPES } from "../types";
-import { Factor, FactorMap, FactorsFromJson } from "../factor";
+import { Logger, LogEvent, Detector, EVENT_TYPES } from "../types";
+import { FactorMap, FactorsFromJson } from "../factor";
 import { ModelRuntimeDetector } from "../detectors/model-run-time-detector";
 import { WellDetector } from "../detectors/well-detector-supply";
-import { RainProbablityDetector } from "../detectors/rain-probability-detector";
 import { DecisionTree, DecisionTreeFromJson } from "../decision-tree";
-import { Context, ExternalScriptHost } from "../external-script-interfaces";
 import { WellManager } from "../supply-model/well-manager";
+import * as PluginAPI from "@concord-consortium/lara-plugin-api";
 
-const externalScriptName = "supply";
-export class Supply implements EventListener, Logger {
+export class Supply implements Logger {
   description: string;
   name: string;
   mainLogger: Logger | null;
@@ -18,10 +16,10 @@ export class Supply implements EventListener, Logger {
   wellManagerNF: WellManager;
   dtree: DecisionTree;
 
-
-  constructor(conf:any, context:Context) {
+  constructor(context: PluginAPI.IPluginRuntimeContext) {
     this.description = "monitor supply model student interactions for feedback.";
-    this.name = externalScriptName;
+    this.name = "supply";
+    const conf = context.authoredState && JSON.parse(context.authoredState);
     this.createFactorMap(conf.model);
     this.dtree = DecisionTreeFromJson(conf.model);
     this.wellManagerFB = new WellManager();
@@ -31,6 +29,9 @@ export class Supply implements EventListener, Logger {
       new ModelRuntimeDetector(this.map.m_tt1, [sendUpstream]),
       new WellDetector(this.map.n_fb_rur1, this.map.n_nf_rur1, this.map.n_fb_urb1, this.wellManagerFB, this.wellManagerNF, [sendUpstream])
     ];
+    PluginAPI.events.onLog((logData: any) => {
+      this.handleEvent(logData);
+    });
   }
 
   // TODO (?): refactor this class so that it shares the same base with
@@ -40,16 +41,13 @@ export class Supply implements EventListener, Logger {
     this.map = FactorsFromJson(data.factors).map;
   }
 
-  log(event:LogEvent) {
-    if(this.mainLogger) {
-      event.parameters.model=this.name;
-      this.mainLogger.log(event);
-    }
+  log(event: LogEvent) {
+    event.parameters.model = this.name;
+    PluginAPI.log(event);
   }
 
-  handleEvent(event: LogEvent, logger:Logger){
+  handleEvent(event: LogEvent) {
     this.detectEvents(event);
-    if(! this.mainLogger) { this.mainLogger = logger; }
     if(event.event === EVENT_TYPES.ARG_BLOCK_SUBMIT) {
       const feedback = this.dtree.evaluate(this.map).feedback;
       const factorNames = Object.getOwnPropertyNames(this.map);
@@ -68,8 +66,17 @@ export class Supply implements EventListener, Logger {
       detector.handleEvent(event);
     });
   }
-
 }
 
-const context:ExternalScriptHost = (window as any).ExternalScripts;
-context.register(externalScriptName, Supply);
+export const initPlugin = () => {
+  if (!PluginAPI || !PluginAPI.registerPlugin) {
+    // tslint:disable-next-line:no-console
+    console.warn("LARA Plugin API not available, Supply terminating");
+    return;
+  }
+  // tslint:disable-next-line:no-console
+  console.log("LARA Plugin API available, Supply initialization");
+  PluginAPI.registerPlugin("supply", Supply);
+};
+
+initPlugin();

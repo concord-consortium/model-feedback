@@ -26,8 +26,8 @@ export class WellManager extends WellManagerBase {
     ans.forEach((w) => {
       w.canPump = this.layerHelper.canPump (w);
       w.urban = this.layerHelper.isUrban(w);
-    })
-    return ans
+    });
+    return ans;
   }
 
   stats() {

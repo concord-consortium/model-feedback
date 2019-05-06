@@ -88,3 +88,4 @@ understood as names relative to the `src` folder of this repository.
   * Some modules/things may not be in use and may be cleaned up.
 
     * For instance, is the module `combo-detector` in use?  Seems not.
+

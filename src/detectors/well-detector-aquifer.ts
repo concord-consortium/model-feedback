@@ -12,7 +12,7 @@ export class AquiferWellDetector extends BasicDetector {
   totalIntegral: number;
   lastTime: number;
   lastTotal: number;
-  model_is_on: boolean;
+  modelIsOn: boolean;
   // Factor values must be computed cumulatively accross reload events.
   // These two new attributes serve that purpose.
   baselineConfinedFV: number;
@@ -39,19 +39,19 @@ export class AquiferWellDetector extends BasicDetector {
     this.totalIntegral = 0;
     this.lastTime = 0;
     this.lastTotal = 0;
-    this.model_is_on = false;
+    this.modelIsOn = false;
   }
 
   // look for start / stop / wellevents to integrate water output over time.
   handleEvent(event:LogEvent) {
     switch(event.event) {
       case EVENT_TYPES.STARTED_MODEL:
-        this.model_is_on = true;
+        this.modelIsOn = true;
         this.wellTracker.consumeReserved ();
         this.emitWellData(event);
         break;
       case EVENT_TYPES.STOPED_MODEL:
-        this.model_is_on = false;
+        this.modelIsOn = false;
         // no break---must pass through here.
       // ARG_BLOCK_SUBMIT: considered "stop model" for our purpose here.
       case EVENT_TYPES.ARG_BLOCK_SUBMIT:
@@ -81,10 +81,12 @@ export class AquiferWellDetector extends BasicDetector {
       'confined': this.wellManager.activeConfinedCount (),
       'unconfined': this.wellManager.activeUnconfinedCount ()
     };
-    if (this.model_is_on)
+    if (this.modelIsOn) {
       this.wellTracker.add (numbers);
-    else
+    }
+    else {
       this.wellTracker.reserve (numbers);
+    }
   }
 
   updateWell(event:LogEvent) {
@@ -113,8 +115,9 @@ export class AquiferWellDetector extends BasicDetector {
     if (this.lastTime) {
       this.totalIntegral += 0.5 * (newTotal + this.lastTotal) *
         (thisTime - this.lastTime) / 1000;
-    } else // The Unix Epoch time means that integral did not start.
+    } else { // The Unix Epoch time means that integral did not start.
       this.totalIntegral = 0;
+    }
     this.lastTime = thisTime;
     this.lastTotal = newTotal;
     const allpumpingwells = confined + unconfined;

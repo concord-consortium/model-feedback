@@ -1,22 +1,23 @@
-import { Logger, EventListener, LogEvent } from "../types";
-import { Context, ExternalScriptHost } from "../external-script-interfaces";
+import { Logger, LogEvent } from "../types";
+import * as PluginAPI from "@concord-consortium/lara-plugin-api";
 
-export class EventDebugging implements EventListener, Logger {
+export class EventDebugging implements Logger {
   description: string;
   name: string;
-  mainLogger: Logger | null;
 
-  constructor(conf:any, context:Context) {
+  constructor() {
     this.description = "event debugging script";
     this.name = "LoggingEventDebugger";
-    this.mainLogger = conf.logger || null;
+    PluginAPI.events.onLog((event: LogEvent) => {
+      this.handleEvent(event);
+    });
   }
 
-  log(event:LogEvent) {
+  log(event: LogEvent) {
     this.reportEvent("out", event);
   }
 
-  handleEvent(event: LogEvent, logger:Logger){
+  handleEvent(event: LogEvent){
     this.reportEvent("in", event);
   }
 
@@ -25,8 +26,17 @@ export class EventDebugging implements EventListener, Logger {
     console.dir(event);
     console.groupEnd();
   }
-
 }
 
-const context:ExternalScriptHost = (window as any).ExternalScripts;
-context.register("debugging", EventDebugging);
+export const initPlugin = () => {
+  if (!PluginAPI || !PluginAPI.registerPlugin) {
+    // tslint:disable-next-line:no-console
+    console.warn("LARA Plugin API not available, EventDebugging terminating");
+    return;
+  }
+  // tslint:disable-next-line:no-console
+  console.log("LARA Plugin API available, EventDebugging initialization");
+  PluginAPI.registerPlugin("debugging", EventDebugging);
+};
+
+initPlugin();

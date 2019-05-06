@@ -39,16 +39,17 @@ export class LayerHelperBase {
     //   in the "invisible top layer" above all layers defined in
     //   this.layers.
     let index = 0, xLayer = null;
-    const well_y = well.y as number;
+    const wellY = well.y as number;
     while (true) {
-      if (index == sortedXLayers.length) {
+      if (index === sortedXLayers.length) {
         // a special "empty top  LayerSlice" object
-        xLayer = { layer: {}, name: "", yValue: well_y + 1 };
+        xLayer = { layer: {}, name: "", yValue: wellY + 1 };
         break;
       }
       xLayer = sortedXLayers[index++];
-      if (well_y <= xLayer.yValue)
+      if (wellY <= xLayer.yValue) {
         break;
+      }
     }
     // xLayer should never be null; we could insert an "assert statement"
     // here, if we do desire..

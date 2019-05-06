@@ -1,34 +1,44 @@
 import * as ReactDOM from "react-dom";
 import * as React from "react";
 import { FeedbackView } from "../components/feedback-view";
-import { ExternalScriptHost, Context} from "../external-script-interfaces";
-import { EventListener, Logger, LogEvent } from "../types";
+import * as PluginAPI from "@concord-consortium/lara-plugin-api";
 
 const DOM_SELECTOR=".arg-block";
 
-class FeedbackViewer implements EventListener {
+class FeedbackViewer {
   name: string;
   description: string;
   feedbackView: FeedbackView;
+  context: PluginAPI.IPluginRuntimeContext;
 
-  constructor(conf:any, context:Context) {
+  constructor(context: PluginAPI.IPluginRuntimeContext) {
     this.description = "Provide visual feedback over arg-block";
     this.name = "ModelFeedback";
+    this.context = context;
     this.setupReactView();
-  }
-
-  handleEvent(evt:LogEvent, logger:Logger) {
-    this.feedbackView.handleEvent(evt, logger);
+    PluginAPI.events.onLog((logData: any) => {
+      this.feedbackView.handleEvent(logData);
+    });
   }
 
   setupReactView() {
-    const reactContainer = document.createElement("div");
+    const reactContainer = this.context.container;
     const argblock = document.querySelector(DOM_SELECTOR);
     (argblock as Element).appendChild(reactContainer);
     const element = React.createElement(FeedbackView, null);
     this.feedbackView = ReactDOM.render(element, reactContainer);
   }
-
 }
-const context:ExternalScriptHost = (window as any).ExternalScripts;
-context.register("feedbackView", FeedbackViewer);
+
+export const initPlugin = () => {
+  if (!PluginAPI || !PluginAPI.registerPlugin) {
+    // tslint:disable-next-line:no-console
+    console.warn("LARA Plugin API not available, FeedbackViewer terminating");
+    return;
+  }
+  // tslint:disable-next-line:no-console
+  console.log("LARA Plugin API available, FeedbackViewer initialization");
+  PluginAPI.registerPlugin("feedbackView", FeedbackViewer);
+};
+
+initPlugin();
