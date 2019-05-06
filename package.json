@@ -66,6 +66,6 @@
     "yarn": "^1.5.1"
   },
   "dependencies": {
-    "@concord-consortium/lara-plugin-api": "^3.0.0-pre.12"
+    "@concord-consortium/lara-plugin-api": "^3.0.0-pre.13"
   }
 }
