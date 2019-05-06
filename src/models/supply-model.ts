@@ -7,17 +7,17 @@ export const Model =
         "type": "Timer"
       },
       {
-        "label": "nFbRur1",
+        "label": "n_fb_rur1",
         "description": "the average number of flowback wells in the rural area.",
         "type": "Number"
       },
       {
-        "label": "nFbUrb1",
+        "label": "n_fb_urb1",
         "description": "the average number of flowback wells in the urban area",
         "type": "Number"
       },
       {
-        "label": "nNfRur1",
+        "label": "n_nf_rur1",
         "description": "the average number of non-flowback wells in the rural area",
         "type": "Number"
       }
@@ -58,7 +58,7 @@ export const Model =
       },
       {
         "label": "C1",
-        "factor": "nFbRur1",
+        "factor": "n_fb_rur1",
         "expression": "<",
         "value": 2,
         "yes": "C2",
@@ -66,7 +66,7 @@ export const Model =
       },
       {
         "label": "C2",
-        "factor": "nFbUrb1",
+        "factor": "n_fb_urb1",
         "expression": "<",
         "value": 0.55,
         "yes": "C3",
@@ -74,7 +74,7 @@ export const Model =
       },
       {
         "label": "C3",
-        "factor": "nNfRur1",
+        "factor": "n_nf_rur1",
         "expression": ">",
         "value": 0.1,
         "yes": "R4",

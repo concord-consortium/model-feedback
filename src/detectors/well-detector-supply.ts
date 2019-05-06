@@ -7,24 +7,25 @@ import { NumberMap, ReserveableNumbersTracker as WellTracker } from "../types";
 export class WellDetector extends BasicDetector {
   wellManagerFB:WellManager;
   wellManagerNF:WellManager;
-  nFbRur: Factor;
-  nNfRur: Factor;
-  nFbUrb: Factor;
+  // tslint:disable:variable-name
+  n_fb_rur: Factor;
+  n_nf_rur: Factor;
+  n_fb_urb: Factor;
   fbWellTracker: WellTracker;
   nfWellTracker: WellTracker;
   modelIsOn: boolean;
 
   constructor(
-    _nFbRur:Factor,
-    _nNfRur:Factor,
-    _nFbUrb:Factor,
+    _n_fb_rur:Factor,
+    _n_nf_rur:Factor,
+    _n_fb_urb:Factor,
     _wellManagerFB:WellManager,
     _wellManagerNF:WellManager,
     _handlers:EventHandler[]=[]) {
-      super(_nFbRur, _handlers);
-      this.nFbRur = _nFbRur;
-      this.nNfRur = _nNfRur;
-      this.nFbUrb = _nFbUrb;
+      super(_n_fb_rur, _handlers);
+      this.n_fb_rur = _n_fb_rur;
+      this.n_nf_rur = _n_nf_rur;
+      this.n_fb_urb = _n_fb_urb;
       this.wellManagerFB = _wellManagerFB;
       this.wellManagerNF = _wellManagerNF;
       this.fbWellTracker = new WellTracker ();
@@ -141,15 +142,15 @@ export class WellDetector extends BasicDetector {
     const {rural: rnf, urban: unf} = this.nfWellTracker.averages ();
     // Any of the four values that we assigned may be "undefined", because
     // the mapping returned by "averages" can be an empty mapping.
-    this.nFbRur.value = rfb || 0.0;
-    this.nNfRur.value = rnf || 0.0;
-    this.nFbUrb.value = ufb || 0.0;
+    this.n_fb_rur.value = rfb || 0.0;
+    this.n_nf_rur.value = rnf || 0.0;
+    this.n_fb_urb.value = ufb || 0.0;
     this.emit({
       event: "well-output-report",
       parameters: {
-        nFbRur: this.nFbRur.value,
-        nFbUrb: this.nFbUrb.value,
-        nNfRur: this.nNfRur.value,
+        n_fb_rur: this.n_fb_rur.value,
+        n_fb_urb: this.n_fb_urb.value,
+        n_nf_rur: this.n_nf_rur.value,
       }
     });
   }

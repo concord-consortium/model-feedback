@@ -11,7 +11,9 @@
   "scripts": {
     "watch": "webpack --watch",
     "test": "jest",
-    "start": "webpack-dev-server --no-inline"
+    "start": "webpack-dev-server --no-inline",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "lint:fix": "tslint -c tslint.json --fix 'src/**/*.{ts,tsx}'"
   },
   "contributors": [
     {
@@ -55,6 +57,7 @@
     "ts-node": "^8.1.0",
     "tslint": "^5.6",
     "tslint-loader": "^3.5.4",
+    "tslint-react": "^4.0.0",
     "typescript": "^3.4.5",
     "uglify-js": "^3.0",
     "webpack": "^4.30.0",
