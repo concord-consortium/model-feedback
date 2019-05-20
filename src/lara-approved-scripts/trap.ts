@@ -13,6 +13,7 @@ export class TrapFeedback implements Logger {
   map: FactorMap;
   dtModelTime: DecisionTree;
   dtDropletTime: DecisionTree;
+  context: PluginAPI.IPluginRuntimeContext;
 
   constructor(context: PluginAPI.IPluginRuntimeContext) {
     this.description = "Look at Trap 1 Model interaction for feedback.";
@@ -42,6 +43,7 @@ export class TrapFeedback implements Logger {
     PluginAPI.events.onLog((logData: any) => {
       this.handleEvent(logData);
     });
+    this.context = context;
   }
 
   createFactorMap(data:any) {
@@ -50,7 +52,7 @@ export class TrapFeedback implements Logger {
 
   log(event: LogEvent) {
     event.parameters.model = this.name;
-    PluginAPI.log(event);
+    this.context.log(event);
   }
 
   handleEvent(event: LogEvent) {

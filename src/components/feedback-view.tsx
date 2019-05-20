@@ -8,7 +8,9 @@ import * as PluginAPI from "@concord-consortium/lara-plugin-api";
 const ROBOT_IMAGE_URL = "https://model-feedback.concord.org/rain-bot.png";
 const DOM_SELECT_FOR_BUTTON = ".ab-robot-analysis";
 
-export interface FeedbackProps {}
+export interface FeedbackProps {
+  log: (logEvent: LogEvent) => void;
+}
 
 export interface FeedbackState {
   showing: boolean;
@@ -97,7 +99,7 @@ export class FeedbackView
   }
 
   log(logEvent: LogEvent) {
-    PluginAPI.log(logEvent);
+    this.props.log(logEvent);
   }
 
   handleEvent(logEvent: LogEvent) {

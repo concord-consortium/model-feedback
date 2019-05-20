@@ -9,12 +9,12 @@ import * as PluginAPI from "@concord-consortium/lara-plugin-api";
 export class Supply implements Logger {
   description: string;
   name: string;
-  mainLogger: Logger | null;
   detectors: Detector[];
   map: FactorMap;
   wellManagerFB: WellManager;
   wellManagerNF: WellManager;
   dtree: DecisionTree;
+  context: PluginAPI.IPluginRuntimeContext;
 
   constructor(context: PluginAPI.IPluginRuntimeContext) {
     this.description = "monitor supply model student interactions for feedback.";
@@ -32,6 +32,7 @@ export class Supply implements Logger {
     PluginAPI.events.onLog((logData: any) => {
       this.handleEvent(logData);
     });
+    this.context = context;
   }
 
   // TODO (?): refactor this class so that it shares the same base with
@@ -43,7 +44,7 @@ export class Supply implements Logger {
 
   log(event: LogEvent) {
     event.parameters.model = this.name;
-    PluginAPI.log(event);
+    this.context.log(event);
   }
 
   handleEvent(event: LogEvent) {

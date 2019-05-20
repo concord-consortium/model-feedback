@@ -10,11 +10,11 @@ import * as PluginAPI from "@concord-consortium/lara-plugin-api";
 export class Aquifer implements Logger {
   description: string;
   name: string;
+  context: PluginAPI.IPluginRuntimeContext;
   detectors: Detector[];
   map: FactorMap;
   wellManager: WellManager;
   dtree: DecisionTree;
-
 
   constructor(context: PluginAPI.IPluginRuntimeContext) {
     this.description = "monitor aquifer model student interactions for feedback.";
@@ -32,6 +32,7 @@ export class Aquifer implements Logger {
     PluginAPI.events.onLog((logData: any) => {
       this.handleEvent(logData);
     });
+    this.context = context;
   }
 
   createFactorMap(data:any) {
@@ -40,7 +41,7 @@ export class Aquifer implements Logger {
 
   log(event: LogEvent) {
     event.parameters.model = this.name;
-    PluginAPI.log(event);
+    this.context.log(event);
   }
 
   handleEvent(event: LogEvent){
