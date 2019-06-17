@@ -5,6 +5,7 @@ import { DurationDetector } from "../detectors/duration-detector";
 import { ModelRuntimeDetector } from "../detectors/model-run-time-detector";
 import { DecisionTree, DecisionTreeFromJson } from "../decision-tree";
 import * as PluginAPI from "@concord-consortium/lara-plugin-api";
+import { AuthoringNotImplemented } from "../authoring-not-implemented";
 
 export class TrapFeedback implements Logger {
   description: string;
@@ -13,8 +14,10 @@ export class TrapFeedback implements Logger {
   map: FactorMap;
   dtModelTime: DecisionTree;
   dtDropletTime: DecisionTree;
+  context: PluginAPI.IPluginRuntimeContext;
 
   constructor(context: PluginAPI.IPluginRuntimeContext) {
+    this.context = context;
     this.description = "Look at Trap 1 Model interaction for feedback.";
     this.name = "aquifer";
     const conf = context.authoredState && JSON.parse(context.authoredState);
@@ -50,7 +53,7 @@ export class TrapFeedback implements Logger {
 
   log(event: LogEvent) {
     event.parameters.model = this.name;
-    PluginAPI.log(event);
+    this.context.log(event);
   }
 
   handleEvent(event: LogEvent) {
@@ -85,7 +88,7 @@ export const initPlugin = () => {
   }
   // tslint:disable-next-line:no-console
   console.log("LARA Plugin API available, Trap plugin initialization");
-  PluginAPI.registerPlugin("trap", TrapFeedback);
+  PluginAPI.registerPlugin({runtimeClass: TrapFeedback, authoringClass: AuthoringNotImplemented});
 };
 
 initPlugin();

@@ -5,6 +5,7 @@ import { WellDetector } from "../detectors/well-detector-supply";
 import { DecisionTree, DecisionTreeFromJson } from "../decision-tree";
 import { WellManager } from "../supply-model/well-manager";
 import * as PluginAPI from "@concord-consortium/lara-plugin-api";
+import { AuthoringNotImplemented } from "../authoring-not-implemented";
 
 export class Supply implements Logger {
   description: string;
@@ -15,8 +16,10 @@ export class Supply implements Logger {
   wellManagerFB: WellManager;
   wellManagerNF: WellManager;
   dtree: DecisionTree;
+  context: PluginAPI.IPluginRuntimeContext;
 
   constructor(context: PluginAPI.IPluginRuntimeContext) {
+    this.context = context;
     this.description = "monitor supply model student interactions for feedback.";
     this.name = "supply";
     const conf = context.authoredState && JSON.parse(context.authoredState);
@@ -43,7 +46,7 @@ export class Supply implements Logger {
 
   log(event: LogEvent) {
     event.parameters.model = this.name;
-    PluginAPI.log(event);
+    this.context.log(event);
   }
 
   handleEvent(event: LogEvent) {
@@ -76,7 +79,7 @@ export const initPlugin = () => {
   }
   // tslint:disable-next-line:no-console
   console.log("LARA Plugin API available, Supply initialization");
-  PluginAPI.registerPlugin("supply", Supply);
+  PluginAPI.registerPlugin({runtimeClass: Supply, authoringClass: AuthoringNotImplemented});
 };
 
 initPlugin();
