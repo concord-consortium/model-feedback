@@ -1,0 +1,17 @@
+{
+  "name": "Debugging Model Feedback",
+  "label": "debugging",
+  "url": "https://model-feedback.concord.org/version/1.2.0/debugging.js",
+  "version": 3,
+  "description": "This plugin provides debugging model feedback",
+  "authoring_metadata": {
+    "components": [
+      {
+        "label": "debugging",
+        "name": "Debugging",
+        "scope": "embeddable",
+        "guiAuthoring": false
+      }
+    ]
+  }
+}

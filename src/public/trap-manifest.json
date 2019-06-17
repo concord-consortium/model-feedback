@@ -1,0 +1,17 @@
+{
+  "name": "Trap Model Feedback",
+  "label": "trap",
+  "url": "https://model-feedback.concord.org/version/1.2.0/trap.js",
+  "version": 3,
+  "description": "This plugin provides trap model feedback",
+  "authoring_metadata": {
+    "components": [
+      {
+        "label": "trap",
+        "name": "Trap",
+        "scope": "embeddable",
+        "guiAuthoring": false
+      }
+    ]
+  }
+}

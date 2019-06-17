@@ -58,7 +58,10 @@ module.exports = {
       from: 'html/**/*',
       to: '',
       flatten: true
-    }])
+    }]),
+    new CopyWebpackPlugin([
+      {from: 'src/public'}
+    ])
   // TODO: Minimize again sometime
   //   new webpack.optimize.UglifyJsPlugin({
   //     minimize: true,
