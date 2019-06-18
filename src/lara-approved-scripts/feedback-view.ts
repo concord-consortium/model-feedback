@@ -2,6 +2,7 @@ import * as ReactDOM from "react-dom";
 import * as React from "react";
 import { FeedbackView } from "../components/feedback-view";
 import * as PluginAPI from "@concord-consortium/lara-plugin-api";
+import { AuthoringNotImplemented } from "../authoring-not-implemented";
 
 const DOM_SELECTOR=".arg-block";
 
@@ -38,7 +39,7 @@ export const initPlugin = () => {
   }
   // tslint:disable-next-line:no-console
   console.log("LARA Plugin API available, FeedbackViewer initialization");
-  PluginAPI.registerPlugin("feedbackView", FeedbackViewer);
+  PluginAPI.registerPlugin({runtimeClass: FeedbackViewer, authoringClass: AuthoringNotImplemented});
 };
 
 initPlugin();
