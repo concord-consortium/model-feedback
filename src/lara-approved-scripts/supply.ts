@@ -34,7 +34,6 @@ export class Supply implements Logger {
     PluginAPI.events.onLog((logData: any) => {
       this.handleEvent(logData);
     });
-    this.context = context;
   }
 
   // TODO (?): refactor this class so that it shares the same base with

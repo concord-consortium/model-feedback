@@ -11,11 +11,11 @@ import { AuthoringNotImplemented } from "../authoring-not-implemented";
 export class Aquifer implements Logger {
   description: string;
   name: string;
-  context: PluginAPI.IPluginRuntimeContext;
   detectors: Detector[];
   map: FactorMap;
   wellManager: WellManager;
   dtree: DecisionTree;
+  context: PluginAPI.IPluginRuntimeContext;
 
   constructor(context: PluginAPI.IPluginRuntimeContext) {
     this.context = context;
@@ -34,7 +34,6 @@ export class Aquifer implements Logger {
     PluginAPI.events.onLog((logData: any) => {
       this.handleEvent(logData);
     });
-    this.context = context;
   }
 
   createFactorMap(data:any) {

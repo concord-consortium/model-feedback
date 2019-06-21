@@ -45,7 +45,6 @@ export class TrapFeedback implements Logger {
     PluginAPI.events.onLog((logData: any) => {
       this.handleEvent(logData);
     });
-    this.context = context;
   }
 
   createFactorMap(data:any) {
