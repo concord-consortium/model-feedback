@@ -1,0 +1,17 @@
+{
+  "name": "FeedbackView Model Feedback",
+  "label": "feedbackView",
+  "url": "https://model-feedback.concord.org/version/1.2.0/feedbackView.js",
+  "version": 3,
+  "description": "This plugin provides feedbackView model feedback",
+  "authoring_metadata": {
+    "components": [
+      {
+        "label": "feedbackView",
+        "name": "FeedbackView",
+        "scope": "embeddable",
+        "guiAuthoring": false
+      }
+    ]
+  }
+}

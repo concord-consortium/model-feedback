@@ -1,5 +1,6 @@
 import { Logger, LogEvent } from "../types";
 import * as PluginAPI from "@concord-consortium/lara-plugin-api";
+import { AuthoringNotImplemented } from "../authoring-not-implemented";
 
 export class EventDebugging implements Logger {
   description: string;
@@ -36,7 +37,7 @@ export const initPlugin = () => {
   }
   // tslint:disable-next-line:no-console
   console.log("LARA Plugin API available, EventDebugging initialization");
-  PluginAPI.registerPlugin("debugging", EventDebugging);
+  PluginAPI.registerPlugin({runtimeClass: EventDebugging, authoringClass: AuthoringNotImplemented});
 };
 
 initPlugin();

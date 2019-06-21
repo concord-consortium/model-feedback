@@ -1,0 +1,17 @@
+{
+  "name": "Supply Model Feedback",
+  "label": "supply",
+  "url": "https://model-feedback.concord.org/version/1.2.0/supply.js",
+  "version": 3,
+  "description": "This plugin provides supply model feedback",
+  "authoring_metadata": {
+    "components": [
+      {
+        "label": "supply",
+        "name": "Supply",
+        "scope": "embeddable",
+        "guiAuthoring": false
+      }
+    ]
+  }
+}

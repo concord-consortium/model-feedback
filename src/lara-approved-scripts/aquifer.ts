@@ -6,6 +6,7 @@ import { RainProbablityDetector } from "../detectors/rain-probability-detector";
 import { DecisionTree, DecisionTreeFromJson } from "../decision-tree";
 import { WellManager } from "../aquifer-model/well-manager";
 import * as PluginAPI from "@concord-consortium/lara-plugin-api";
+import { AuthoringNotImplemented } from "../authoring-not-implemented";
 
 export class Aquifer implements Logger {
   description: string;
@@ -17,6 +18,7 @@ export class Aquifer implements Logger {
   dtree: DecisionTree;
 
   constructor(context: PluginAPI.IPluginRuntimeContext) {
+    this.context = context;
     this.description = "monitor aquifer model student interactions for feedback.";
     this.name = "aquifer";
     const conf = context.authoredState && JSON.parse(context.authoredState);
@@ -74,7 +76,7 @@ export const initPlugin = () => {
   }
   // tslint:disable-next-line:no-console
   console.log("LARA Plugin API available, Aquifer initialization");
-  PluginAPI.registerPlugin("aquifer", Aquifer);
+  PluginAPI.registerPlugin({runtimeClass: Aquifer, authoringClass: AuthoringNotImplemented});
 };
 
 initPlugin();
