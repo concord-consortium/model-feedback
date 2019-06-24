@@ -10,7 +10,6 @@ import { AuthoringNotImplemented } from "../authoring-not-implemented";
 export class Supply implements Logger {
   description: string;
   name: string;
-  mainLogger: Logger | null;
   detectors: Detector[];
   map: FactorMap;
   wellManagerFB: WellManager;

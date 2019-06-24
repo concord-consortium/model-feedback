@@ -26,7 +26,7 @@ class FeedbackViewer {
     const reactContainer = this.context.container;
     const argblock = document.querySelector(DOM_SELECTOR);
     (argblock as Element).appendChild(reactContainer);
-    const element = React.createElement(FeedbackView, null);
+    const element = React.createElement(FeedbackView, { log: this.context.log });
     this.feedbackView = ReactDOM.render(element, reactContainer);
   }
 }
