@@ -1,7 +1,7 @@
 {
   "name": "Aquifer Model Feedback",
   "label": "aquifer",
-  "url": "https://model-feedback.concord.org/version/1.2.0/aquifer.js",
+  "url": "aquifer.js",
   "version": 3,
   "description": "This plugin provides aquifer model feedback",
   "authoring_metadata": {

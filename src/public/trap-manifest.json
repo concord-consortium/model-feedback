@@ -1,7 +1,7 @@
 {
   "name": "Trap Model Feedback",
   "label": "trap",
-  "url": "https://model-feedback.concord.org/version/1.2.0/trap.js",
+  "url": "trap.js",
   "version": 3,
   "description": "This plugin provides trap model feedback",
   "authoring_metadata": {
