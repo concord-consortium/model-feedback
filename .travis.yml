@@ -1,15 +1,15 @@
 sudo: false
 language: node_js
 node_js:
-  - 6
+  - 8
 install:
   - travis_retry gem install s3_website -v 3.4.0
   - travis_retry pip install awscli --upgrade --user
-  - npm i -g yarn && yarn
+  - travis_retry npm ci
 before_script: webpack && npm test
 script: ./s3_deploy.sh
 cache:
-  yarn: true
+  npm: true
   bundler: true
   directories:
     - node_modules
