@@ -13,7 +13,7 @@ These scripts are written in [TypeScript](https://www.typescriptlang.org/). They
 
 After cloning the repo follow these steps to get started:
 
-1. `yarn` to install deps.
+1. `npm i` to install deps.
 2. `webpack` to build.
 2. `npm run test` to test.
 3. `webpack-dev-server` to continuously build.

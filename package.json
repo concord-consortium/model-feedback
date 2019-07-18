@@ -62,8 +62,7 @@
     "uglify-js": "^3.0",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.1",
-    "webpack-dev-server": "^3.3.1",
-    "yarn": "^1.5.1"
+    "webpack-dev-server": "^3.3.1"
   },
   "dependencies": {
     "@concord-consortium/lara-plugin-api": "^3.0.0-pre.18"
