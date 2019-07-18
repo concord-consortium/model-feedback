@@ -1,4 +1,5 @@
 sudo: false
+dist: trusty
 language: node_js
 node_js:
   - 8
@@ -6,8 +7,8 @@ install:
   - travis_retry gem install s3_website -v 3.4.0
   - travis_retry pip install awscli --upgrade --user
   - travis_retry npm ci
-before_script: webpack && npm test
-script: ./s3_deploy.sh
+script: webpack && npm test
+after_success: ./s3_deploy.sh
 cache:
   npm: true
   bundler: true
